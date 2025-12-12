@@ -36,8 +36,8 @@ Future<Database> initializeDB() async{
         kc_seq integer,
         m_seq integer,
         p_name text,
-        p_price interger,
-        p_stock interger,
+        p_price integer,
+        p_stock integer,
         p_image blob
         
         
@@ -71,9 +71,9 @@ Future<int> insertProduct(Product product)  async{
    result= await db.rawInsert(
       """
       insert into product
-      (p_name,p_price,p_stock,p_image,sc_seq)
+      (p_name,p_price,p_stock,p_image,sc_seq,gc_seq,cc_seq,m_seq,kc_seq)
       values
-      (?,?,?,?,?)
+      (?,?,?,?,?,?,?,?,?)
 
       """,
       [
@@ -81,7 +81,11 @@ Future<int> insertProduct(Product product)  async{
         product.p_price,
         product.p_stock,
         product.p_image,
-        product.cc_seq
+        product.sc_seq,
+        product.gc_seq,
+        product.cc_seq,
+        product.m_seq,
+        product.kc_seq
       ]
     );
     return result;

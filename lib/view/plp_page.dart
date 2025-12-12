@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
-import 'package:teamprogectfinal/model/category_gender.dart';
+import 'package:teamprogectfinal/model/maker.dart';
 import 'package:teamprogectfinal/model/product.dart';
+import 'package:teamprogectfinal/util/color.dart';
 import 'package:teamprogectfinal/util/font_size.dart';
-import 'package:teamprogectfinal/vm/genderdatabasehandler.dart';
+import 'package:teamprogectfinal/vm/makerdatabasehandler.dart';
 import 'package:teamprogectfinal/vm/productdatabasehandler.dart';
 
 class PlpPage extends StatefulWidget {
@@ -14,34 +14,33 @@ class PlpPage extends StatefulWidget {
 }
 
 class _PlpPageState extends State<PlpPage> {
-  List<String> list = ['나이키','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19'];
   late int selectedCategory;
-  late Genderdatabasehandler genderdatabasehandler;
+  late Makerdatabasehandler makerdatabasehandler;
   late Productdatabasehandler productdatabasehandler;
 
   @override
   void initState() {
     super.initState();
-    genderdatabasehandler = Genderdatabasehandler();
+    makerdatabasehandler = Makerdatabasehandler();
     productdatabasehandler = Productdatabasehandler();
+    selectedCategory = 0;
   }
 
   //페이지 기본 데이터 받아오기
   Future<({
-    List<CategoryGender> genderList,
+    List<Maker> makerList,
     List<Product> productList,
   })> loadPageData() async {
     //DB 초기화
-    await genderdatabasehandler.initializeDB();
+    await makerdatabasehandler.initializeDB();
     await productdatabasehandler.initializeDB();
 
     //리스트 데이터 받기
-    final genderList = await genderdatabasehandler.queryGender();
-    print(genderList);
+    final makerList = await makerdatabasehandler.queryMaker();
     final productList = await productdatabasehandler.queryProduct();
 
     return (
-      genderList: genderList,
+      makerList: makerList,
       productList: productList,
     );
   }
@@ -57,32 +56,44 @@ class _PlpPageState extends State<PlpPage> {
       body: FutureBuilder(
         future: loadPageData(),
         builder: (context, snapshot) {
-          if (!snapshot.hasData) {
+          if (!snapshot.hasData) { //로딩 중
             return Center(child: CircularProgressIndicator());
           }
-          List<CategoryGender> genderList = snapshot.data!.genderList;
-          List<Product> productList = snapshot.data!.productList;
+          List<Maker> makerList = snapshot.data!.makerList; //제조사 리스트
+          List<Product> productList = snapshot.data!.productList; //제품 리스트
+          if(selectedCategory == 0) selectedCategory = makerList[0].m_seq!; //선택된 제조사 초기화
           return Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: genderList.map(
-                  (e) {
-                    return Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Text(
-                        style: TextStyle(
-                          fontSize: FontSize.productTitle
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: makerList.map(
+                    (e) {
+                      return GestureDetector(
+                        onTap: () { //선택된 제조사 변경
+                          selectedCategory = e.m_seq!;
+                          setState(() {});
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Text(
+                            style: TextStyle( //제조사 이름 버튼
+                              color: selectedCategory == e.m_seq ? PColor.primaryColor : Colors.black,
+                              fontWeight: selectedCategory == e.m_seq ? FontWeight.bold : FontWeight.normal,
+                              fontSize: FontSize.productTitle
+                            ),
+                            e.m_name
+                          ),
                         ),
-                        e.gc_name
-                      ),
-                    );
-                  },
-                ).toList(),
+                      );
+                    },
+                  ).toList(),
+                ),
               ),
               Expanded(
-                child: GridView.builder(
-                  itemCount: list.length,
+                child: GridView.builder( 
+                  itemCount: productList.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
                     crossAxisSpacing: 10,
@@ -93,29 +104,29 @@ class _PlpPageState extends State<PlpPage> {
                       color: Colors.white,
                       child: Column(
                         children: [
-                          Text(
-                            list[index]
+                          Image.memory(
+                            productList[index].p_image
                           ),
                           Text(
                             style: TextStyle(
                               fontSize: FontSize.productTitle,
                               fontWeight: FontWeight.bold
                             ),
-                            list[index]
+                            productList[index].m_seq.toString()
                           ),
                           Text(
                             style: TextStyle(
                               fontSize: FontSize.greylittle,
                               color: Colors.grey
                             ),
-                            list[index]
+                            productList[index].p_name
                           ),
                           Text(
                             style: TextStyle(
                               fontSize: FontSize.productTitle,
                               fontWeight: FontWeight.bold
                             ),
-                            list[index]
+                            productList[index].p_price.toString()
                           ),
                         ],
                       ),

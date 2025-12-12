@@ -93,7 +93,44 @@ Future<List<User>> queryUser() async{
   return queryResult.map((e) => User.fromMap(e)).toList();
 }
 
-
-
+// 유저 정보 수정 (사진 변경 O)
+  Future<int> updateUserAll(User user) async{
+    int result = 0;
+    final Database db = await initializeDB();
+    result = await db.rawUpdate(
+      """
+        update user
+        set u_id = ?, u_name = ?, u_password = ?, u_phone = ?, u_image = ?
+        where seq = ?
+      """,
+      [
+      user.u_id,
+      user.u_name,
+      user.u_password,
+      user.u_phone,
+      user.u_image
+      ]
+    );
+    return result;
+  }
+// 유저 정보 수정 (사진 변경 X)
+  Future<int> updateUser(User user) async{
+    int result = 0;
+    final Database db = await initializeDB();
+    result = await db.rawUpdate(
+      """
+        update user
+        set u_id = ?, u_name = ?, u_password = ?, u_phone = ?
+        where seq = ?
+      """,
+      [
+      user.u_id,
+      user.u_name,
+      user.u_password,
+      user.u_phone
+      ]
+    );
+    return result;
+  }
 
 }//class
