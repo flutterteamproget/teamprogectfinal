@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teamprogectfinal/view/home.dart';
-import 'package:teamprogectfinal/view/my_page.dart';
 
 void main() {
   runApp(const MyApp());
