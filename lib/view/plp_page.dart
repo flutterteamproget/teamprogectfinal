@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:teamprogectfinal/util/font_size.dart';
 
 class PlpPage extends StatefulWidget {
   const PlpPage({super.key});
@@ -51,8 +52,26 @@ class _PlpPageState extends State<PlpPage> {
                   ), 
                   itemBuilder: (context, index) {
                     return Container(
-                      color: Colors.grey,
-                      child: Text(list[index]),
+                      color: Colors.white,
+                      child: Column(
+                        children: [
+                          Text(
+                            style: TextStyle(
+                              fontSize: FontSize.productTitle
+                            ),
+                            list[index]
+                          ),
+                          Text(
+                            list[index]
+                          ),
+                          Text(
+                            list[index]
+                          ),
+                          Text(
+                            list[index]
+                          ),
+                        ],
+                      ),
                     );
                   },
                 ),
