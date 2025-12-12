@@ -16,30 +16,30 @@ int? m_seq;
 
   Future<Database> initializeDB() async{
   String path = await getDatabasesPath();
-  return openDatabase(
-    join(path,'user.db'),
-    onCreate: (db, version) async{
-      await db.execute(
-        """
-        create table maker
-        (
-        m_seq integer primary key autoincrement,
-        m_phone text,
-        m_name text
-       
-
+    return openDatabase(
+      join(path,'user.db'),
+      onCreate: (db, version) async{
+        await db.execute(
+          """
+          create table maker
+          (
+          m_seq integer primary key autoincrement,
+          m_phone text,
+          m_address text,
+          m_name text
         
-        
-        )
 
-        """
-      );
-    },
-    version: 1,
-  );
-}
 
- Future<List<Maker>> queryMaker() async{
+          )
+
+          """
+        );
+      },
+      version: 1,
+    );
+  }
+
+  Future<List<Maker>> queryMaker() async{
     final Database db =await initializeDB();
     final List<Map<String,Object?>> result = await db.rawQuery(
       """
@@ -49,4 +49,5 @@ int? m_seq;
     );
     return result.map((e) => Maker.fromMap(e)).toList();
   }
+
 }
