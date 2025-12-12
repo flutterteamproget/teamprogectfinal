@@ -1,5 +1,6 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:teamprogectfinal/model/maker.dart';
 
 class Makerdatabasehandler {
 /*
@@ -38,5 +39,14 @@ int? m_seq;
   );
 }
 
-
+ Future<List<Maker>> queryMaker() async{
+    final Database db =await initializeDB();
+    final List<Map<String,Object?>> result = await db.rawQuery(
+      """
+        select * 
+        from maker
+      """
+    );
+    return result.map((e) => Maker.fromMap(e)).toList();
+  }
 }
