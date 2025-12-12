@@ -9,6 +9,7 @@ class Productdatabasehandler {
   int cc_seq;
   int gc_seq;
   int sc_seq;
+  int kc_seq;
   int m_seq;
   String p_name;
   int p_price;
@@ -31,7 +32,8 @@ Future<Database> initializeDB() async{
         p_seq integer primary key autoincrement,
         cc_seq integer,
         gc_seq integer,
-        gc_seq integer,
+        sc_seq integer,
+        kc_seq integer,
         m_seq integer,
         p_name text,
         p_price interger,

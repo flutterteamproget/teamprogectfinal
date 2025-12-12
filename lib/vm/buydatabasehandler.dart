@@ -9,7 +9,8 @@ class Buydatabasehandler {
   int u_seq;
   int p_seq;
   String b_date;
-  int b_price;1
+  int b_price;
+  int b_quantity;
 
 */
   
@@ -27,8 +28,8 @@ class Buydatabasehandler {
         u_seq integer,
         p_seq integer,
         b_data text,
-        b_price int
-
+        b_price integer,
+        b_quantity integer
         
         
         )

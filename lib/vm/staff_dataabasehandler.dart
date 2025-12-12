@@ -6,7 +6,7 @@ class StaffDataabasehandler {
 
   /*
   int? s_seq;
-  String s_branch;
+  int br_branch;
   String s_rank;
   String s_phone;
   Uint8List s_image;
@@ -24,7 +24,7 @@ Future<Database> initializeDB() async{
         create table staff
         (
         s_seq integer primary key autoincrement,
-        s_branch text,
+        br_seq integer,
         s_rank text,
         s_phone text,
         s_image blob,
