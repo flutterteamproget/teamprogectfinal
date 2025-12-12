@@ -12,7 +12,10 @@ class _MyPageState extends State<MyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      backgroundColor: PColor.baseBackgroundColor,
+      appBar: AppBar(
+        backgroundColor: PColor.appBarBackgroundColor,
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
