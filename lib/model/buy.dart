@@ -4,8 +4,8 @@ class Buy {
   int u_seq;
   int p_seq;
   String b_date;
-  String b_price;
-
+  int b_price;
+//11
   Buy(
     {
       this.b_seq,
