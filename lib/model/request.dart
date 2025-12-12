@@ -5,7 +5,7 @@ class Request {
   int req_quantity;
   String req_manappdate;
   String req_dirappdate;
-  String s_superseq;
+  String? s_superseq;
   int? s_seq;
   int? q_seq;
   int? m_seq;
@@ -18,7 +18,7 @@ class Request {
       required this.req_quantity,
       required this.req_manappdate,
       required this.req_dirappdate,
-      required this.s_superseq,
+      this.s_superseq,
       this.s_seq,
       this.q_seq,
       this.m_seq,
