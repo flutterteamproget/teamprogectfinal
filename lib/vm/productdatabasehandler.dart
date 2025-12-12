@@ -54,7 +54,7 @@ Future<List<Product>> queryProduct()async{
     final Database db =await initializeDB();
     final List<Map<String,Object?>> result =await db.rawQuery(
       """
-      select *from
+      select *
       from product
       
 
