@@ -6,7 +6,7 @@ import 'package:teamprogectfinal/model/user.dart';
 class Logindatabasehandler {
 
 /*
- int? seq;
+  int? seq;
   String id;
   String password;
   String phone;
@@ -80,7 +80,18 @@ Future<int> insertUser(User user) async{
 
   );
   return result;
-}//build
+}
+
+// 유저 검색
+Future<List<User>> queryUser() async{
+  final Database db = await initializeDB();
+  final List<Map<String, Object?>> queryResult = await db.rawQuery(
+    """
+    select * from user
+    """
+  );
+  return queryResult.map((e) => User.fromMap(e)).toList();
+}
 
 
 

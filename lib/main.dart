@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:teamprogectfinal/view/my_page.dart';
+// import 'package:teamprogectfinal/view/my_update.dart';
 
 void main() {
   runApp(const MyApp());

@@ -215,7 +215,7 @@ Future insertAction() async {
 
     var userInsert = User(
       u_id: idcontroller.text,
-      u_name: phonecontroller.text,
+      u_name: namecontroller.text,
       u_password: pwccontroller.text,
       u_phone: phonecontroller.text,
       u_image: getImage,
