@@ -71,14 +71,17 @@ Future<int> insertProduct(Product product)  async{
    result= await db.rawInsert(
       """
       insert into product
-      ()
+      (p_name,p_price,p_stock,p_image,sc_seq)
       values
       (?,?,?,?,?)
 
       """,
       [
-       
-
+        product.p_name,
+        product.p_price,
+        product.p_stock,
+        product.p_image,
+        product.cc_seq
       ]
     );
     return result;
