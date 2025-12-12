@@ -2,10 +2,10 @@ import 'dart:typed_data';
 
 class Product {
   int? p_seq;
-  int cc_seq;
-  int gc_seq;
-  int sc_seq;
-  int m_seq;
+  int? cc_seq;
+  int? gc_seq;
+  int? sc_seq;
+  int? m_seq;
   String p_name;
   int p_price;
   int p_stock;
@@ -14,10 +14,10 @@ class Product {
   Product(
     {
       this.p_seq,
-      required this.cc_seq,
-      required this.gc_seq,
-      required this.sc_seq,
-      required this.m_seq,
+      this.cc_seq,
+      this.gc_seq,
+      this.sc_seq,
+      this.m_seq,
       required this.p_name,
       required this.p_price,
       required this.p_stock,

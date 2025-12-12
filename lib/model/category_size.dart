@@ -1,15 +1,15 @@
-class SizeCategory {
+class CategorySize {
   int? sc_seq;
   String sc_name;
 
-  SizeCategory(
+  CategorySize(
     {
       this.sc_seq,
       required this.sc_name
     }
   );
 
-  SizeCategory.fromMap(Map<String, dynamic> res)
+  CategorySize.fromMap(Map<String, dynamic> res)
   : sc_seq = res['sc_seq'],
     sc_name = res['sc_name'];
 }

@@ -1,17 +1,17 @@
 class Refund {
   int? ref_seq;
-  int s_seq;
-  int u_seq;
-  int pic_seq;
+  int? s_seq;
+  int? u_seq;
+  int? pic_seq;
   String ref_date;
   String ref_reason;
 
   Refund(
     {
       this.ref_seq,
-      required this.s_seq,
-      required this.u_seq,
-      required this.pic_seq,
+      this.s_seq,
+      this.u_seq,
+      this.pic_seq,
       required this.ref_date,
       required this.ref_reason,
     }
