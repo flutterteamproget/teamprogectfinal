@@ -20,42 +20,45 @@ class _PlpPageState extends State<PlpPage> {
         backgroundColor: Colors.white,
         centerTitle: true,
       ),
-      body: Center(
-        child: Column(
-          children: [
-            Row(
-              children: [
-                TextButton(
-                  onPressed: () {
-                    
-                  }, 
-                  child: Text('제조사1')
-                ),
-                TextButton(
-                  onPressed: () {
-                    
-                  }, 
-                  child: Text('제조사2')
-                ),
-              ],
-            ),
-            Expanded(
-              child: GridView.builder(
-                itemCount: list.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                ), 
-                itemBuilder: (context, index) {
-                  return Container(
-                    color: Colors.grey,
-                    child: Text(list[index]),
-                  );
-                },
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Center(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      
+                    }, 
+                    child: Text('제조사1')
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      
+                    }, 
+                    child: Text('제조사2')
+                  ),
+                ],
               ),
-            )
-          ],
+              Expanded(
+                child: GridView.builder(
+                  itemCount: list.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                  ), 
+                  itemBuilder: (context, index) {
+                    return Container(
+                      color: Colors.grey,
+                      child: Text(list[index]),
+                    );
+                  },
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
