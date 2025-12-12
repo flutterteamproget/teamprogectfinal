@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:teamprogectfinal/view/main_page.dart';
 import 'package:teamprogectfinal/view/signup.dart';
 import 'package:teamprogectfinal/vm/userdatabasehandler.dart';
 
@@ -135,10 +136,8 @@ class _HomeState extends State<Home> {
 
     );
   }else{
-     Get.snackbar("로그인성공", "환영합니다",
-    
-
-    );
+     Get.snackbar("로그인성공", "환영합니다",);
+     Get.to(MainPage());
   }
 
       
