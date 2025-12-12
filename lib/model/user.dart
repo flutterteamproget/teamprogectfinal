@@ -25,12 +25,12 @@ class User {
   
   );
 User.fromMap(Map<String,dynamic>res)
-  :u_seq =res['seq'],
-  u_id=res['id'],
-  u_name=res['name'],
-  u_password =res['password'],
-  u_phone =res['phone'],
-  u_image =res['image'];
+  :u_seq =res['u_seq'],
+  u_id=res['u_id'],
+  u_name=res['u_name'],
+  u_password =res['u_password'],
+  u_phone =res['u_phone'],
+  u_image =res['u_image'];
 
 
 
