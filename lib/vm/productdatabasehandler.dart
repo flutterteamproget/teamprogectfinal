@@ -13,7 +13,7 @@ class Productdatabasehandler {
   String p_name;
   int p_price;
   int p_stock;
-  Uint8List p_image;
+  Uint8List p_image;1
 
 
 */
