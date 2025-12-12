@@ -32,7 +32,7 @@ int? sc_seq;
     );
   }
 
-  Future<List<CategorySize>> queryGender() async{
+  Future<List<CategorySize>> querySize() async{
     final Database db =await initializeDB();
     final List<Map<String,Object?>> result = await db.rawQuery(
       """

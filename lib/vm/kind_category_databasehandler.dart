@@ -33,7 +33,7 @@ String kc_name;
     );
   }
 
-  Future<List<CategoryKind>> queryGender() async{
+  Future<List<CategoryKind>> queryKind() async{
     final Database db =await initializeDB();
     final List<Map<String,Object?>> result = await db.rawQuery(
       """
