@@ -34,7 +34,7 @@ class Colordatabasehandler {
     );
   }
 
-  Future<List<CategoryColor>> queryGender() async{
+  Future<List<CategoryColor>> queryColor() async{
     final Database db =await initializeDB();
     final List<Map<String,Object?>> result = await db.rawQuery(
       """
