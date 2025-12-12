@@ -29,7 +29,7 @@ Future<Database> initializeDB() async{
         rec_date text,
         s_seq integer,
         p_seq integer,
-        b_seq integer,
+        b_seq integer
       
         
         

@@ -27,7 +27,7 @@ Future<Database> initializeDB() async{
         u_seq integer,
         pic_seq integer,
         ref_date text,
-        ref_reason text,
+        ref_reason text
       
         
         

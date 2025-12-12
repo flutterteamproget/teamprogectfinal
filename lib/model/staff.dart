@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 class Staff {
   int? s_seq;
-  String s_branch;
+  int? br_seq;
   String s_rank;
   String s_phone;
   Uint8List s_image;
@@ -12,7 +12,7 @@ class Staff {
   Staff(
     {
       this.s_seq,
-      required this.s_branch,
+      this.br_seq,
       required this.s_rank,
       required this.s_phone,
       required this.s_image,
@@ -23,7 +23,7 @@ class Staff {
 
   Staff.fromMap(Map<String, dynamic> res)
   : s_seq = res['s_seq'],
-    s_branch = res['s_branch'],
+    br_seq = res['br_seq'],
     s_rank = res['s_rank'],
     s_phone = res['s_phone'],
     s_image = res['s_image'],

@@ -24,7 +24,7 @@ int? m_seq;
         (
         m_seq integer primary key autoincrement,
         m_phone text,
-        m_name text,
+        m_name text
        
 
         

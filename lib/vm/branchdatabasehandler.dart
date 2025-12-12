@@ -27,6 +27,7 @@ class Branchdatabasehandler {
         create table branch
         (
         br_seq integer primary key autoincrement,
+        br_name text,
         br_lat real,
         br_lng real,
         br_address text,

@@ -16,7 +16,7 @@ Future<Database> initializeDB() async{
     onCreate: (db, version) async{
       await db.execute(
         """
-        create table color
+        create table color_category
         (
         cc_seq integer primary key autoincrement,
         cc_name text

@@ -27,7 +27,7 @@ Future<Database> initializeDB() async{
         u_id text,
         u_name text,
         u_password text,
-        u_phone text,1
+        u_phone text,
         u_image blob
         
         

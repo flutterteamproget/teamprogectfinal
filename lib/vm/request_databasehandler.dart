@@ -33,7 +33,7 @@ Future<Database> initializeDB() async{
         s_superseq text,
         s_seq interger,
         q_seq interger,
-        m_seq interger,
+        m_seq interger
       
         
         
