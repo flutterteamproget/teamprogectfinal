@@ -63,7 +63,7 @@ Future<List<Product>> queryProduct()async{
    }
 
 
-Future<int> insertAddress(Product product)  async{  
+Future<int> insertProduct(Product product)  async{  
     int result=0; //판단
     final Database db= await initializeDB();
    result= await db.rawInsert(
