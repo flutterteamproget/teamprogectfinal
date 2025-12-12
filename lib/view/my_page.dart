@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:teamprogectfinal/util/color.dart';
+import 'package:teamprogectfinal/view/buydetail.dart';
+import 'package:teamprogectfinal/vm/buydatabasehandler.dart';
 import 'package:teamprogectfinal/vm/userdatabasehandler.dart';
 
 class MyPage extends StatefulWidget {
@@ -11,11 +14,14 @@ class MyPage extends StatefulWidget {
 
 class _MyPageState extends State<MyPage> {
   late Logindatabasehandler handler;
+  late Buydatabasehandler bHandler;
 
   @override
   void initState() {
     super.initState();
     handler = Logindatabasehandler();
+    bHandler = Buydatabasehandler();
+    
   }
 
   @override
@@ -94,6 +100,58 @@ class _MyPageState extends State<MyPage> {
                           padding: const EdgeInsets.all(20.0),
                           child: Text('구매 내역'),
                         ),
+                    FutureBuilder(
+                      future: bHandler.queryBuyDate(1), // <- 1 대신 구매번호 b_seq 불러오기
+                      builder: (context, snapshot) {
+                        return snapshot.hasData && snapshot.data!.isNotEmpty
+                        ? Text(snapshot.data!)
+                        : Center(
+                          child: Text('데이터가 없습니다.'));
+                      },
+                    ),
+                    FutureBuilder(
+                      future: bHandler.queryBuyProduct(1), // <- 1 대신 구매번호 b_seq 불러오기
+                      builder: (context, snapshot) {
+                        return snapshot.hasData && snapshot.data!.isNotEmpty
+                        ? ListView.builder(
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              color: PColor.baseBackgroundColor,
+                              shadowColor: Colors.transparent,
+                              child: Column(
+                                children: [
+                                  Text(snapshot.data![index].b_date),
+                                  TextButton(
+                                    onPressed: () {
+                                      Get.to(
+                                        Buydetail(),
+                                        arguments: [
+                                          snapshot.data![index].b_seq,
+                                          snapshot.data![index].b_date,
+                                          snapshot.data![index].b_price,
+                                          snapshot.data![index].b_quantity,
+                                        ]
+                                      );
+                                    }, 
+                                  child: Text('구매 상세')),
+                                  Text(
+                                    '''
+                                      (제조사 m_name)
+                                      (상품명 p_name)
+                                      (사이즈 p_size, ${snapshot.data![index].b_quantity})
+                                      ${snapshot.data![index].b_price}
+                                    '''
+                                  )
+                                ],
+                              ),
+                            );
+                          }
+                        )
+                        : Center(
+                          child: Text('데이터가 없습니다.')
+                        );
+                      },),
                         Divider(color: PColor.borderColor),
                       ],
                     );
