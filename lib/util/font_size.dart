@@ -1,4 +1,4 @@
 class FontSize {
-  static double productTitle = 15;
+  static double productTitle = 16;
   static double greylittle = 12;
 }

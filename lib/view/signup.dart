@@ -38,158 +38,161 @@ final ImagePicker picker =ImagePicker();
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        
-      ),
-
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
           
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                child: Container(
-                  width:MediaQuery.of(context).size.width,
-                  height: 200,
-                  color: Colors.grey,
-                  child: Center(
-                    child: imageFile ==null
-                    ?Icon(Icons.face)
-                    :Image.file(File(imageFile!.path)),
-                    
-                  ),
-                
-                ),
-              ),
-              Padding(
-               padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                child: ElevatedButton(
-                  onPressed: () =>  getImageFromGallery(ImageSource.gallery),
-                  child: Text("이미지 가져오기"),
-                  style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.black,
-              foregroundColor: Colors.white,
-              minimumSize: const Size(220, 40),
-            ),
-                  
-                  ),
-              ),
-          
-                Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                  child: SizedBox(
-                    width: 350,
-                    child: TextField(
-                      controller:namecontroller ,
-                      decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                                  ),
-                        labelText: "이름"
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                  child: SizedBox(
-                    width: 350,
-                    child: TextField(
-                      
-                      controller:idcontroller ,
-                      decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                                  ),
-                        labelText: "id"
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                  child: SizedBox(
-                    width: 350,
-                    child: TextField(
-                      
-                      controller:pwccontroller ,
-                      decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                                  ),
-                        labelText: "비밀번호"
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                  child: SizedBox(
-                    width: 350,
-                    child: TextField(
-                      controller:pwcheckcontroller ,
-                      decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                                  ),
-                        labelText: "비밀번호확인"
-                      ),
-                    ),
-                  ),
-                ),
+        ),
+      
+        body: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+            
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                  child: SizedBox(
-                    width: 350,
-                    child: TextField(
-                      controller:phonecontroller ,
-                      decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                                  ),
-                        labelText: "전화번호"
+                  child: Container(
+                    width:MediaQuery.of(context).size.width,
+                    height: 200,
+                    color: Colors.grey,
+                    child: Center(
+                      child: imageFile ==null
+                      ?Icon(Icons.face)
+                      :Image.file(File(imageFile!.path)),
+                      
+                    ),
+                  
+                  ),
+                ),
+                Padding(
+                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                  child: ElevatedButton(
+                    onPressed: () =>  getImageFromGallery(ImageSource.gallery),
+                    child: Text("이미지 가져오기"),
+                    style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black,
+                foregroundColor: Colors.white,
+                minimumSize: const Size(220, 40),
+              ),
+                    
+                    ),
+                ),
+            
+                  Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                    child: SizedBox(
+                      width: 350,
+                      child: TextField(
+                        controller:namecontroller ,
+                        decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                                    ),
+                          labelText: "이름"
+                        ),
                       ),
                     ),
                   ),
-                ),
-          
-                ElevatedButton(
-                  onPressed: () {
-                    if(namecontroller.text.trim().isEmpty||
-                      idcontroller.text.trim().isEmpty||
-                      pwccontroller.text.trim().isEmpty||
-                      pwcheckcontroller.text.trim().isEmpty||
-                      phonecontroller.text.trim().isEmpty ){
-                      Get.snackbar("회원가입실패", "빈칸을 전부 채워주세요",
-                       backgroundColor: Colors.red,);
-                                      
-                    }else if(
-                      pwccontroller.text.trim() != pwcheckcontroller.text.trim()
-                      
-                    ){
-                     Get.snackbar("회원가입실패", "비밀번호가 일치하지않습니다 다시 입력해주세요",
-                                backgroundColor: Colors.red,);
-
-                    }else if(imageFile ==null){
-                      Get.snackbar("회원가입실패", "프로필 사진을 넣어주세요",
-                       backgroundColor: Colors.red,);
-                    }else{
-                      insertAction();
-                    }
-                  },
-                  child: Text("회원가입"),
-                  style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.black,
-              foregroundColor: Colors.white,
-              minimumSize: const Size(120, 40),
-            ),
-                  
+                  Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                    child: SizedBox(
+                      width: 350,
+                      child: TextField(
+                        
+                        controller:idcontroller ,
+                        decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                                    ),
+                          labelText: "아이디"
+                        ),
+                      ),
+                    ),
                   ),
-          
-          
-            ],
+                  Padding(
+                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                    child: SizedBox(
+                      width: 350,
+                      child: TextField(
+                        
+                        controller:pwccontroller ,
+                        decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                                    ),
+                          labelText: "비밀번호"
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                    child: SizedBox(
+                      width: 350,
+                      child: TextField(
+                        controller:pwcheckcontroller ,
+                        decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                                    ),
+                          labelText: "비밀번호 확인"
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                    child: SizedBox(
+                      width: 350,
+                      child: TextField(
+                        controller:phonecontroller ,
+                        decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                                    ),
+                          labelText: "전화번호"
+                        ),
+                      ),
+                    ),
+                  ),
+            
+                  ElevatedButton(
+                    onPressed: () {
+                      if(namecontroller.text.trim().isEmpty||
+                        idcontroller.text.trim().isEmpty||
+                        pwccontroller.text.trim().isEmpty||
+                        pwcheckcontroller.text.trim().isEmpty||
+                        phonecontroller.text.trim().isEmpty ){
+                        Get.snackbar("회원가입 실패", "빈칸을 전부 채워주세요.",
+                         backgroundColor: Colors.red,);
+                                        
+                      }else if(
+                        pwccontroller.text.trim() != pwcheckcontroller.text.trim()
+                        
+                      ){
+                       Get.snackbar("회원가입 실패", "비밀번호가 일치하지 않습니다. 다시 입력해주세요.",
+                                  backgroundColor: Colors.red,);
+      
+                      }else if(imageFile ==null){
+                        Get.snackbar("회원가입 실패", "프로필 사진을 넣어주세요.",
+                         backgroundColor: Colors.red,);
+                      }else{
+                        insertAction();
+                      }
+                    },
+                    child: Text("회원가입"),
+                    style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black,
+                foregroundColor: Colors.white,
+                minimumSize: const Size(120, 40),
+              ),
+                    
+                    ),
+            
+            
+              ],
+            ),
           ),
         ),
       ),

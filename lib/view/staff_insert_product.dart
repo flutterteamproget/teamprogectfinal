@@ -47,7 +47,7 @@ class _StaffInsertProductState extends State<StaffInsertProduct> {
   }
 
   Future loadSizes() async {
-    List<CategorySize> temp = await sizeHandler.queryGender();
+    List<CategorySize> temp = await sizeHandler.querySize();
     setState(() {
       sizeList = temp;
     });
