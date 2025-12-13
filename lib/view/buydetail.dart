@@ -26,7 +26,7 @@ class _BuydetailState extends State<Buydetail> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    
     super.initState();
     handler = Buydatabasehandler();
   }
