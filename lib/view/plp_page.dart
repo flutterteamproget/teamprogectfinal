@@ -43,17 +43,20 @@ class _PlpPageState extends State<PlpPage> {
     final makerList = await makerdatabasehandler.queryMaker();
     List<Product> productList;
     
-
-    if(selectedCategory == 0){//선택된 카테고리에 따라 제품 보여주기
-      productList = await productdatabasehandler.queryProduct();
-    }else if(selectedCategory == 1){
-      productList = await productdatabasehandler.queryProductCategory('m_seq', 1);
-    }else if(selectedCategory == 2){
-      productList = await productdatabasehandler.queryProductCategory('m_seq', 2);
-    }else if(selectedCategory == 3){
-      productList = await productdatabasehandler.queryProductCategory('m_seq', 3);
+    if(isSearching){ //검색 중일 경우
+      productList = await productdatabasehandler.queryProductSearch(searchController.text);
     }else{
-      productList = await productdatabasehandler.queryProductCategory('m_seq', 4);
+      if(selectedCategory == 0){//선택된 카테고리에 따라 제품 보여주기
+        productList = await productdatabasehandler.queryProduct();
+      }else if(selectedCategory == 1){
+        productList = await productdatabasehandler.queryProductCategory('m_seq', 1);
+      }else if(selectedCategory == 2){
+        productList = await productdatabasehandler.queryProductCategory('m_seq', 2);
+      }else if(selectedCategory == 3){
+        productList = await productdatabasehandler.queryProductCategory('m_seq', 3);
+      }else{
+        productList = await productdatabasehandler.queryProductCategory('m_seq', 4);
+      }
     }
 
     return (
@@ -89,7 +92,9 @@ class _PlpPageState extends State<PlpPage> {
                     isDense: true,
                     suffixIcon: IconButton(
                       onPressed: () {
-                        //검색
+                        selectedCategory = 0;
+                        isSearching = true;
+                        setState(() {});
                       }, 
                       icon: Icon(Icons.search)
                     ),
@@ -109,6 +114,7 @@ class _PlpPageState extends State<PlpPage> {
                       (e) {
                         return GestureDetector(
                           onTap: () { //선택된 제조사 변경
+                            isSearching = false;
                             if(selectedCategory == e.m_seq){
                               selectedCategory = 0;
                             }else{
