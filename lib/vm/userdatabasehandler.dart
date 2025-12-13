@@ -135,4 +135,21 @@ Future<List<User>> queryUser() async{
     return result;
   }
 
+// 유저 table의 attribute 불러오기
+Future<String?> queryUser2(String key, int u_seq) async{
+    final Database db = await initializeDB();
+    final List<Map<String, Object?>> queryResults = await db.rawQuery(
+      """
+      select $key from user
+      where u_seq = ?
+      """,
+      [u_seq]
+    ); 
+    // queryResults = [{b_date : 2025-12-11}], [], ...
+    if(queryResults.isNotEmpty){
+      return queryResults[0][key].toString();
+    }else{
+      return null;
+    }
+  }
 }//class
