@@ -1,9 +1,13 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:teamprogectfinal/model/category_color.dart';
 import 'package:teamprogectfinal/model/category_gender.dart';
 import 'package:teamprogectfinal/model/category_kind.dart';
 import 'package:teamprogectfinal/model/category_size.dart';
 import 'package:teamprogectfinal/model/maker.dart';
+import 'package:teamprogectfinal/view/my_page.dart';
 import 'package:teamprogectfinal/vm/colordatabasehandler.dart';
 import 'package:teamprogectfinal/vm/genderdatabasehandler.dart';
 import 'package:teamprogectfinal/vm/kind_category_databasehandler.dart';
@@ -27,6 +31,7 @@ class _DrawerpageState extends State<Drawerpage> {
   List<CategoryGender> genderList=[];
   CategoryGender? selectedgender;
   late Genderdatabasehandler genderHandler;
+
   //사이즈
   List<CategorySize> sizeList = [];
   CategorySize? selectedSize;
@@ -99,6 +104,7 @@ class _DrawerpageState extends State<Drawerpage> {
   Future loadmaker() async{
     List<Maker> maker = await makerhandler.queryMaker();
     makerList=maker;
+    
     setState(() { });
   }
 
@@ -108,68 +114,86 @@ class _DrawerpageState extends State<Drawerpage> {
       appBar: AppBar(
       ),
       drawer: Drawer(
-        child: ListView(
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                // 유저 이미지
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+          child: ListView(
+            children: [
+              DrawerHeader(
+                child: FutureBuilder(
+                  future: lHandler.queryUser2(1), // 1은 추후 u_seq로 수정 예정
+                  builder: (context, snapshot) {
+                    return snapshot.hasData && snapshot.data!.isNotEmpty
+                    ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        GestureDetector(
+                          onTap: () => Get.to(MyPage()),
+                          child: CircleAvatar(
+                            radius: 40,
+                            backgroundImage: MemoryImage(snapshot.data!['u_image'] as Uint8List)),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text('${snapshot.data!['u_name']} 고객님'),
+                      ],
+                    )
+                    : Text('불러올 데이터가 없습니다.');
+                  },
+                )
               ),
-              child: Column(
+              SizedBox(
+                height: 250,
+                child: ListView.builder(
+                  itemCount: genderList.length,
+                  itemBuilder: (context, index) {
+                    return ExpansionTile(
+                      title: Text(genderList[index].gc_name),
+                      children: [
+                        SizedBox(
+                          height: 250,
+                          child: ListView.builder(
+                            itemCount: kindList.length,
+                            itemBuilder: (context, index){
+                              return ListTile(
+                                title: Text(kindList[index].kc_name),
+                                onTap: () {
+                                  //
+                                },
+                              );
+                            }
+                          ),
+                        )
+                      ],
+                    );
+                  },
+                ),
+              ),
+              ExpansionTile(
+                title: Text('All Brand'),
                 children: [
-                  // 유저 이름
+                  SizedBox(
+                    height: 230,
+                    child: ListView.builder(
+                      itemCount: makerList.length,
+                      itemBuilder: (context, index){
+                        return ListTile(
+                          title: Text(
+                            makerList[index].m_name
+                          ),
+                          onTap: () {
+                            //
+                          },
+                        );
+                      }
+                    ),
+                  )
                 ],
               )
-            ),
-            Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.zero,
-                itemCount: genderList.length,
-                itemBuilder: (context, index) {
-                  return ExpansionTile(
-                    title: Text(genderList[index].toString()),
-                    children: [
-                      ListView.builder(
-                        itemCount: kindList.length,
-                        itemBuilder: (context, index){
-                          return ListTile(
-                            title: Text(kindList[index].toString())
-                          );
-                        }
-                      )
-                    ],
-                  );
-                },
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
-  }
-  loadUserImage(){
-    FutureBuilder(
-      future: lHandler.queryUser2('u_image', 1), // u_seq 불러올 방법좀요
-      builder: (context, snapshot) {
-        return snapshot.hasData && snapshot.data!.isNotEmpty
-        ? Image.asset(snapshot.data!)
-        : Center(
-          child: Text('데이터가 없습니다.'));
-      },
-    );
-  }
-
-  loadUserInfo(String userinfo){
-    FutureBuilder(
-      future: lHandler.queryUser2(userinfo, 1), // u_seq 불러올 방법좀요
-      builder: (context, snapshot) {
-        return snapshot.hasData && snapshot.data!.isNotEmpty
-        ? Text(snapshot.data!)
-        : Center(
-          child: Text('데이터가 없습니다.'));
-      },
-    );
-  }
-
-  generateTile(){
   }
 }
