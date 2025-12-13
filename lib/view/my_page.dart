@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teamprogectfinal/util/color.dart';
-import 'package:teamprogectfinal/util/font_size.dart';
 import 'package:teamprogectfinal/view/buydetail.dart';
 import 'package:teamprogectfinal/view/home.dart';
-import 'package:teamprogectfinal/view/login.dart';
 import 'package:teamprogectfinal/view/my_update.dart';
 import 'package:teamprogectfinal/vm/buydatabasehandler.dart';
 import 'package:teamprogectfinal/vm/userdatabasehandler.dart';
@@ -17,14 +15,14 @@ class MyPage extends StatefulWidget {
 }
 
 class _MyPageState extends State<MyPage> {
-  late Logindatabasehandler handler;
-  late Buydatabasehandler bHandler;
+  late Logindatabasehandler loginHandler;
+  late Buydatabasehandler buyHandler;
 
   @override
   void initState() {
     super.initState();
-    handler = Logindatabasehandler();
-    bHandler = Buydatabasehandler();
+    loginHandler = Logindatabasehandler();
+    buyHandler = Buydatabasehandler();
     
   }
 
@@ -36,7 +34,7 @@ class _MyPageState extends State<MyPage> {
         backgroundColor: PColor.appBarBackgroundColor
       ),
       body: FutureBuilder(
-        future: handler.queryUser(),
+        future: loginHandler.queryUser(),
         builder: (context, snapshot) {
           return snapshot.hasData && snapshot.data!.isNotEmpty
               ? ListView.builder(
@@ -62,12 +60,16 @@ class _MyPageState extends State<MyPage> {
                                     height: 80,
                                     child: CircleAvatar(
                                       backgroundImage: MemoryImage(snapshot.data![index].u_image!),
+                                      backgroundColor: Colors.grey,
                                     ),
                                   ),
                                 ),
                                 Text(
                                   '${snapshot.data![index].u_name}님 환영합니다.',
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                  ),
                                 ),
                                 Row(
                                   children: [
@@ -118,10 +120,17 @@ class _MyPageState extends State<MyPage> {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(20.0),
-                          child: Text('구매 내역'),
+                          child: Text(
+                            '구매 내역',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
+                        Divider(color: PColor.borderColor),
                     FutureBuilder(
-                      future: bHandler.queryBuyDate(1), // <- 1 대신 구매번호 b_seq 불러오기
+                      future: buyHandler.queryBuyDate(1), // <- 1 대신 구매번호 b_seq 불러오기
                       builder: (context, snapshot) {
                         return snapshot.hasData && snapshot.data!.isNotEmpty
                         ? Text(snapshot.data!)
@@ -130,7 +139,7 @@ class _MyPageState extends State<MyPage> {
                       },
                     ),
                     FutureBuilder(
-                      future: bHandler.queryBuyProduct(1), // <- 1 대신 구매번호 b_seq 불러오기
+                      future: buyHandler.queryBuyProduct(1), // <- 1 대신 구매번호 b_seq 불러오기
                       builder: (context, snapshot) {
                         return snapshot.hasData && snapshot.data!.isNotEmpty
                         ? ListView.builder(
@@ -141,7 +150,13 @@ class _MyPageState extends State<MyPage> {
                               shadowColor: Colors.transparent,
                               child: Column(
                                 children: [
-                                  Text(snapshot.data![index].b_date),
+                                  Text(
+                                    snapshot.data![index].b_date,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                   TextButton(
                                     onPressed: () {
                                       Get.to(
@@ -154,7 +169,14 @@ class _MyPageState extends State<MyPage> {
                                         ]
                                       );
                                     }, 
-                                  child: Text('구매 상세')),
+                                    child: Text(
+                                      '구매 상세',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ),
                                   Text(
                                     '''
                                       (제조사 m_name)
@@ -184,7 +206,7 @@ class _MyPageState extends State<MyPage> {
   }//build
 
 reloadData(){
-    handler.queryUser();
+    loginHandler.queryUser();
     setState(() {});
 
   }
