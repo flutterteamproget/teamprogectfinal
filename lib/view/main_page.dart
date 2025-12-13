@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:teamprogectfinal/view/pdp_page.dart';
 import 'package:teamprogectfinal/vm/productdatabasehandler.dart';
 
 class MainPage extends StatefulWidget {
@@ -29,21 +31,37 @@ class _MainPageState extends State<MainPage> {
               builder: (context, snapshot) {
                 return snapshot.hasData && snapshot.data!.isNotEmpty
                     ? GridView.builder(
+                      
                         itemCount: snapshot.data!.length,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3,
                           crossAxisSpacing: 10,
                           mainAxisSpacing: 10,
+                          mainAxisExtent: 180,
                         ),
                         itemBuilder: (context, index) {
-                          return Card(
-                            child: Column(
-                              children: [
-                                Image.memory(snapshot.data![index].p_image)
-                              ],
+                          return GestureDetector(
+                            onTap: () => Get.to(PdpPage(),
+                            arguments: [
+                              snapshot.data![index].p_name,
+                              snapshot.data![index].p_price,
+                              snapshot.data![index].p_image,
+
+
+
+                            ]),
+                            child: Card(
+                              
+                              child: Column(
+                                children: [
+                                  Image.memory(snapshot.data![index].p_image),
+                                  Text(" ${snapshot.data![index].p_name}"),
+                                  Text(" ${snapshot.data![index].p_price}원")
+                                ],
+                              ),
+                             
                             ),
-                           
                           );
                         },
                       )
