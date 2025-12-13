@@ -37,13 +37,13 @@ class _MainPageState extends State<MainPage> {
                           mainAxisSpacing: 10,
                         ),
                         itemBuilder: (context, index) {
-                          return Container(
-                            color: Colors.grey,
+                          return Card(
                             child: Column(
                               children: [
                                 Image.memory(snapshot.data![index].p_image)
                               ],
                             ),
+                           
                           );
                         },
                       )
