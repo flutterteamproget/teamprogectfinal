@@ -10,14 +10,39 @@ class PdpPage extends StatefulWidget {
 }
 
 class _PdpPageState extends State<PdpPage> {
+late TextEditingController  sizecontroller;
+late TextEditingController branchcontroller;
 
 
+@override
+  void initState() {
+    super.initState();
+  sizecontroller=TextEditingController();
+  branchcontroller=TextEditingController();
+  }
 
 
   var value = Get.arguments ?? "__";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: SafeArea(
+        child: ElevatedButton(
+            onPressed: () {
+              bottomsheetbuy();
+            },
+            child: Text("구매하기"),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.black,
+              foregroundColor: Colors.white,
+               minimumSize: Size(220, 40),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadiusGeometry.circular(4)
+                      ),
+
+            ),
+            ),
+            ),
       appBar: AppBar(),
 
 
@@ -55,6 +80,58 @@ class _PdpPageState extends State<PdpPage> {
 
         ],
       ),
+
+
+
+    );
+
+
+
+  }//build
+
+  bottomsheetbuy(){
+    Get.bottomSheet(
+      Container(
+        width: 500,
+        height: 600,
+        color: Colors.white,
+        child: Column(
+          children: [
+           Text("사이즈 선택"),
+           SizedBox(
+            width: 350,
+             child: TextField(
+              controller: sizecontroller,
+             decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                                      ),
+                            labelText: "사이즈 선택"
+                          ),
+             ),
+           ),
+           Text("수령지 선택"),
+           SizedBox(
+            width: 350,
+             child: TextField(
+              controller: branchcontroller,
+             decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                                      ),
+                            labelText: "수령지선택"
+                          ),
+             ),
+
+             
+           ),
+          Text("총결제 금액                   원")
+           
+          ],
+        ),
+      )
+
     );
   }
-}
+
+}//class

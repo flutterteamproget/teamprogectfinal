@@ -4,6 +4,7 @@ import 'package:teamprogectfinal/view/home.dart';
 import 'package:teamprogectfinal/view/main_page.dart';
 import 'package:teamprogectfinal/view/my_page.dart';
 import 'package:teamprogectfinal/view/staff_insert_product.dart';
+import 'package:teamprogectfinal/view/tabbarview.dart';
 // import 'package:teamprogectfinal/view/my_update.dart';
 
 void main() {

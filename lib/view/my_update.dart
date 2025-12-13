@@ -190,8 +190,6 @@ class _MyUpdateState extends State<MyUpdate> {
                       );
                     } else if (firstDisp==0) {
                      updateAction();
-                    } else if(firstDisp == 0){
-                      updateAction();
                     } else{
                       updateActionAll();
                     }
@@ -238,7 +236,7 @@ class _MyUpdateState extends State<MyUpdate> {
       u_image: getImage,
     );
 
-    int check = await handler.updateUser(userUpdate);
+    int check = await handler.updateUserAll(userUpdate);
     if (check == 0) {
       //Error
     } else {
