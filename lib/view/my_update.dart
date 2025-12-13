@@ -118,8 +118,10 @@ class _MyUpdateState extends State<MyUpdate> {
                           borderSide: BorderSide(color: Colors.black),
                         ),
                         labelText: "아이디",
+                        filled: true,
+                        fillColor: PColor.borderColor,
                       ),
-                      readOnly: true,
+                      enabled: false, // 수정 불가 효과 적용
                     ),
                   ),
                 ),
@@ -190,8 +192,6 @@ class _MyUpdateState extends State<MyUpdate> {
                       );
                     } else if (firstDisp==0) {
                      updateAction();
-                    } else if(firstDisp == 0){
-                      updateAction();
                     } else{
                       updateActionAll();
                     }
@@ -225,7 +225,7 @@ class _MyUpdateState extends State<MyUpdate> {
   }
 
   Future updateActionAll() async {
-    //File Type Byte Type으로 변환하기
+    //File Type을 Byte Type으로 변환하기
     File imageFile1 = File(imageFile!.path);
     Uint8List getImage = await imageFile1.readAsBytes();
 
@@ -238,7 +238,7 @@ class _MyUpdateState extends State<MyUpdate> {
       u_image: getImage,
     );
 
-    int check = await handler.updateUser(userUpdate);
+    int check = await handler.updateUserAll(userUpdate);
     if (check == 0) {
       //Error
     } else {

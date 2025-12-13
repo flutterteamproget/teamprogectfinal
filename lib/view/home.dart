@@ -101,7 +101,7 @@ class _HomeState extends State<Home> {
                       minimumSize: Size(220, 40),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadiusGeometry.circular(4)
-                      )
+                      ),
                     ),
                     ),
                 ),
