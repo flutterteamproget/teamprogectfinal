@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teamprogectfinal/util/color.dart';
 import 'package:teamprogectfinal/util/font_size.dart';
+import 'package:teamprogectfinal/view/buydetail.dart';
 import 'package:teamprogectfinal/view/home.dart';
 import 'package:teamprogectfinal/view/login.dart';
 import 'package:teamprogectfinal/view/my_update.dart';
+import 'package:teamprogectfinal/vm/buydatabasehandler.dart';
 import 'package:teamprogectfinal/vm/userdatabasehandler.dart';
 
 class MyPage extends StatefulWidget {
@@ -82,7 +84,7 @@ class _MyPageState extends State<MyPage> {
                                               snapshot.data![index].u_phone,
                                               snapshot.data![index].u_image,
                                             ]
-                                          );
+                                          )!.then((value) => reloadData());
                                         },
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: Color.fromRGBO(51, 51, 51, 1,),
@@ -179,5 +181,14 @@ class _MyPageState extends State<MyPage> {
         },
       ),
     );
+  }//build
+
+reloadData(){
+    handler.queryUser();
+    setState(() {});
+
   }
-}
+
+
+
+}//class
