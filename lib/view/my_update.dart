@@ -39,7 +39,7 @@ class _MyUpdateState extends State<MyUpdate> {
     pwcheckcontroller = TextEditingController();
     phonecontroller = TextEditingController();
 
-    firstDisp == 0;
+    firstDisp = 0;
 
     namecontroller.text = value[1];
     idcontroller.text = value[2];
@@ -188,12 +188,8 @@ class _MyUpdateState extends State<MyUpdate> {
                         "비밀번호가 일치하지 않습니다. 다시 입력해주세요.",
                         backgroundColor: Colors.red,
                       );
-                    } else if (imageFile == null) {
-                      Get.snackbar(
-                        "수정 실패",
-                        "프로필 사진을 넣어주세요.",
-                        backgroundColor: Colors.red,
-                      );
+                    } else if (firstDisp==0) {
+                     updateAction();
                     } else if(firstDisp == 0){
                       updateAction();
                     } else{

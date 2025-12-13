@@ -101,14 +101,15 @@ Future<List<User>> queryUser() async{
       """
         update user
         set u_id = ?, u_name = ?, u_password = ?, u_phone = ?, u_image = ?
-        where seq = ?
+        where u_seq = ?
       """,
       [
       user.u_id,
       user.u_name,
       user.u_password,
       user.u_phone,
-      user.u_image
+      user.u_image,
+      user.u_seq
       ]
     );
     return result;
@@ -121,13 +122,14 @@ Future<List<User>> queryUser() async{
       """
         update user
         set u_id = ?, u_name = ?, u_password = ?, u_phone = ?
-        where seq = ?
+        where u_seq = ?
       """,
       [
       user.u_id,
       user.u_name,
       user.u_password,
-      user.u_phone
+      user.u_phone,
+      user.u_seq
       ]
     );
     return result;
