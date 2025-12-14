@@ -1,5 +1,6 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:teamprogectfinal/model/category_size.dart';
 import 'package:teamprogectfinal/model/product.dart';
 
 class Productdatabasehandler {
@@ -151,6 +152,31 @@ Future<int> insertProduct(Product product)  async{
       ]
     );
     return result;
-  }
+  } 
+
+
+
+
+
+
+//제조사별로 신발 분류
+
+Future<List<Product>> queryProductByMaker() async {
+  final Database db = await initializeDB();
+  final result = await db.rawQuery(
+    '''
+    SELECT *
+    FROM product p
+    INNER JOIN maker m
+    ON p.m_seq = m.m_seq
+    GROUP BY m.m_name
+
+
+    '''
+  );
+
+  return result.map((e) => Product.fromMap(e)).toList();
+}
+
 
 }

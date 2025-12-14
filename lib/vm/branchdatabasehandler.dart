@@ -1,5 +1,6 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:teamprogectfinal/model/branch.dart';
 
 
 /*
@@ -43,4 +44,21 @@ class Branchdatabasehandler {
     version: 1,
   );
 }
+
+
+
+
+ Future<List<Branch>> queryBranch() async{
+    final Database db =await initializeDB();
+    final List<Map<String,Object?>> result = await db.rawQuery(
+      """
+        select * 
+        from branch
+      """
+    );
+    return result.map((e) => Branch.fromMap(e)).toList();
+  }
+
+
+
 }

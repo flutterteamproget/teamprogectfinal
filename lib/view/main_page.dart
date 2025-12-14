@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:teamprogectfinal/model/product.dart';
 import 'package:teamprogectfinal/view/pdp_page.dart';
 import 'package:teamprogectfinal/vm/productdatabasehandler.dart';
 
@@ -27,7 +28,7 @@ class _MainPageState extends State<MainPage> {
         children: [
           Expanded( 
             child: FutureBuilder(
-              future: phandler.queryProduct(),
+              future: phandler.queryProductByMaker(),
               builder: (context, snapshot) {
                 return snapshot.hasData && snapshot.data!.isNotEmpty
                     ? GridView.builder(
@@ -38,7 +39,7 @@ class _MainPageState extends State<MainPage> {
                           crossAxisCount: 3,
                           crossAxisSpacing: 10,
                           mainAxisSpacing: 10,
-                          mainAxisExtent: 180,
+                          mainAxisExtent: 230,
                         ),
                         itemBuilder: (context, index) {
                           return GestureDetector(
@@ -47,6 +48,7 @@ class _MainPageState extends State<MainPage> {
                               snapshot.data![index].p_name,
                               snapshot.data![index].p_price,
                               snapshot.data![index].p_image,
+                              snapshot.data![index].p_seq,
 
 
 
