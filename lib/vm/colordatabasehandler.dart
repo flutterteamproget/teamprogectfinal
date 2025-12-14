@@ -46,5 +46,26 @@ class Colordatabasehandler {
   }
 
 
+//해당 상품에 존재하는 컬러만 출력
+Future<List<CategoryColor>> queryColorByProduct(String productName) async {
+    final Database db = await initializeDB();
+
+    final List<Map<String, Object?>> result = await db.rawQuery(
+      '''
+      SELECT DISTINCT
+        cc.cc_seq,
+        cc.cc_name
+      FROM product p
+      INNER JOIN color_category cc
+        ON p.cc_seq = cc.cc_seq
+      WHERE p.p_name = ?
+      ORDER BY cc.cc_seq
+      ''',
+      [productName],
+    );
+
+    return result.map((e) => CategoryColor.fromMap(e)).toList();
+  }
+
 
 }
