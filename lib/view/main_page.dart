@@ -9,7 +9,8 @@ import 'package:teamprogectfinal/vm/genderdatabasehandler.dart';
 import 'package:teamprogectfinal/vm/productdatabasehandler.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  final int uSeq;
+  const MainPage({super.key,required this.uSeq});
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -176,6 +177,8 @@ class _MainPageState extends State<MainPage> {
                               productList[index].p_name,
                               productList[index].p_price,
                               productList[index].p_image,
+                              productList[index].p_seq,
+                              widget.uSeq
                             ]),
                         child: Container(
                           color: Colors.white,

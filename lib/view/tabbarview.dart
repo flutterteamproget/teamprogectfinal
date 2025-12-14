@@ -3,7 +3,9 @@ import 'package:teamprogectfinal/view/main_page.dart';
 import 'package:teamprogectfinal/view/my_page.dart';
 
 class Tabbarview extends StatefulWidget {
-  const Tabbarview({super.key});
+  final int useq;
+  const Tabbarview({super.key,
+  required this.useq});
 
   @override
   State<Tabbarview> createState() => _TabbarviewState();
@@ -32,7 +34,7 @@ class _TabbarviewState extends State<Tabbarview>with SingleTickerProviderStateMi
       body: TabBarView(
         controller: controller,
         children: [
-          MainPage(),
+          MainPage(uSeq:widget.useq,),
           MyPage(),
           
 
