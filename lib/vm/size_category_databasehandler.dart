@@ -42,4 +42,26 @@ int? sc_seq;
     );
     return result.map((e) => CategorySize.fromMap(e)).toList();
   }
+//해당 상품에  존재하는 사이즈만
+Future<List<CategorySize>> querySizeByProduct(String productName) async {
+    final Database db = await initializeDB();
+
+    final List<Map<String, Object?>> result = await db.rawQuery(
+      '''
+      SELECT DISTINCT
+        sc.sc_seq,
+        sc.sc_name
+      FROM product p
+      INNER JOIN size_category sc
+        ON p.sc_seq = sc.sc_seq
+      WHERE p.p_name = ?
+      ORDER BY sc.sc_seq
+      ''',
+      [productName],
+    );
+
+    return result.map((e) => CategorySize.fromMap(e)).toList();
+  }
+
+  
 }

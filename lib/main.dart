@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:teamprogectfinal/view/drawerpage.dart';
 import 'package:teamprogectfinal/view/home.dart';
-import 'package:teamprogectfinal/view/main_page.dart';
-import 'package:teamprogectfinal/view/my_page.dart';
-import 'package:teamprogectfinal/view/plp_page.dart';
-import 'package:teamprogectfinal/view/staff_insert_product.dart';
-import 'package:teamprogectfinal/view/tabbarview.dart';
-// import 'package:teamprogectfinal/view/my_update.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,7 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
      
-      home: const MainPage(),
+      home: const Home(),
     );
   }
 }
