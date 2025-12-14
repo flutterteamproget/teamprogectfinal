@@ -50,19 +50,81 @@ Future<Database> initializeDB() async{
   );
 }
 
-Future<List<Product>> queryProduct()async{
+  Future<List<Product>> queryProduct()async{
     final Database db =await initializeDB();
     final List<Map<String,Object?>> result =await db.rawQuery(
       """
       select *
-      from product
-      
+      from product 
+      inner join maker
+      on product.m_seq = maker.m_seq
+      inner join color_category
+      on product.cc_seq = color_category.cc_seq
+      inner join gender_category
+      on product.gc_seq = gender_category.gc_seq
+      inner join kind_category
+      on product.kc_seq = kind_category.kc_seq
+      inner join size_category
+      on product.sc_seq = size_category.sc_seq
 
       """,
       
     );
     return result.map((e) => Product.fromMap(e)).toList(); //한묶음 하나
-   }
+  }
+
+  //카테고리 컬럼명과 시퀀스로 제품목록 검색
+  Future<List<Product>> queryProductCategory(String whatseq, int num)async{
+    final Database db =await initializeDB();
+    final List<Map<String,Object?>> result =await db.rawQuery(
+      """
+      select *
+      from product 
+      inner join maker
+      on product.m_seq = maker.m_seq
+      inner join color_category
+      on product.cc_seq = color_category.cc_seq
+      inner join gender_category
+      on product.gc_seq = gender_category.gc_seq
+      inner join kind_category
+      on product.kc_seq = kind_category.kc_seq
+      inner join size_category
+      on product.sc_seq = size_category.sc_seq
+      where product.$whatseq = ?
+
+      """,
+      [num]
+      
+    );
+    return result.map((e) => Product.fromMap(e)).toList(); //한묶음 하나
+  }
+
+  //카테고리 컬럼명과 시퀀스로 제품목록 검색
+  Future<List<Product>> queryProductSearch(String str)async{
+    final Database db =await initializeDB();
+    final List<Map<String,Object?>> result =await db.rawQuery(
+      """
+      select *
+      from product 
+      inner join maker
+      on product.m_seq = maker.m_seq
+      inner join color_category
+      on product.cc_seq = color_category.cc_seq
+      inner join gender_category
+      on product.gc_seq = gender_category.gc_seq
+      inner join kind_category
+      on product.kc_seq = kind_category.kc_seq
+      inner join size_category
+      on product.sc_seq = size_category.sc_seq
+      where product.p_name like ? or maker.m_name like ?
+
+      """,
+      ["%$str%", "%$str%"]
+      
+    );
+    return result.map((e) => Product.fromMap(e)).toList(); //한묶음 하나
+  }  
+
 
 
 Future<int> insertProduct(Product product)  async{  

@@ -390,7 +390,7 @@ class _StaffInsertProductState extends State<StaffInsertProduct> {
       sc_seq: selectedSize!.sc_seq,
       gc_seq: selectedgender!.gc_seq,
       cc_seq: selectedcolor!.cc_seq,
-      m_seq:  selectedmaker!.m_seq,
+      m_seq: selectedmaker!.m_seq,
       kc_seq: selectedKind!.kc_seq,
 
 
