@@ -89,6 +89,7 @@ class _PlpPageState extends State<PlpPage> {
             return Column(
               children: [
                 TextField(
+                  controller: searchController,
                   decoration: InputDecoration(
                     hintText: '검색어를 입력하세요',
                     isDense: true,

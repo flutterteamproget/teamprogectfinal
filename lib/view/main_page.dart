@@ -46,6 +46,7 @@ class _MainPageState extends State<MainPage> {
     List<Product> productList;
     
     if(isSearching){ //검색 중일 경우
+      print(searchController.text);
       productList = await productdatabasehandler.queryProductSearch(searchController.text);
     }else{
       if(selectedCategory == 0){//선택된 카테고리에 따라 제품 보여주기
@@ -72,19 +73,39 @@ class _MainPageState extends State<MainPage> {
         backgroundColor: Colors.white,
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: FutureBuilder(
-          future: loadPageData(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) { //로딩 중
-              return Center(child: CircularProgressIndicator());
-            }
-            List<CategoryGender> makerList = snapshot.data!.genderList; //제조사 리스트
-            List<Product> productList = snapshot.data!.productList; //제품 리스트
-            return Column(
-              children: [
-                TextField(
+      body: FutureBuilder(
+        future: loadPageData(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) { //로딩 중
+            return Center(child: CircularProgressIndicator());
+          }
+          List<CategoryGender> makerList = snapshot.data!.genderList; //제조사 리스트
+          List<Product> productList = snapshot.data!.productList; //제품 리스트
+          return Column(
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width,
+                color: Colors.amberAccent,
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      '환영합니다.'
+                    ),
+                  )
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Image.asset("images/banner.png"),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20,0,20,0),
+                child: TextField( //검색창
+                  controller: searchController,
                   decoration: InputDecoration(
                     hintText: '검색어를 입력하세요',
                     isDense: true,
@@ -104,39 +125,42 @@ class _MainPageState extends State<MainPage> {
                     // 자동검색
                   },
                 ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: makerList.map(
-                      (e) {
-                        return GestureDetector(
-                          onTap: () { //선택된 제조사 변경
-                            isSearching = false;
-                            if(selectedCategory == e.gc_seq){
-                              selectedCategory = 0;
-                            }else{
-                              selectedCategory = e.gc_seq!;
-                            }
-                            setState(() {});
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Text(
-                              style: TextStyle( //제조사 이름 버튼
-                                color: selectedCategory == e.gc_seq ? PColor.primaryColor : Colors.black,
-                                fontWeight: selectedCategory == e.gc_seq ? FontWeight.bold : FontWeight.normal,
-                                fontSize: FontSize.productTitle
-                              ),
-                              e.gc_name
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: makerList.map(
+                    (e) {
+                      return GestureDetector(
+                        onTap: () { //선택된 제조사 변경
+                          isSearching = false;
+                          if(selectedCategory == e.gc_seq){
+                            selectedCategory = 0;
+                          }else{
+                            selectedCategory = e.gc_seq!;
+                          }
+                          setState(() {});
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Text(
+                            style: TextStyle( //제조사 이름 버튼
+                              color: selectedCategory == e.gc_seq ? PColor.primaryColor : Colors.black,
+                              fontWeight: selectedCategory == e.gc_seq ? FontWeight.bold : FontWeight.normal,
+                              fontSize: FontSize.productTitle
                             ),
+                            e.gc_name
                           ),
-                        );
-                      },
-                    ).toList(),
-                  ),
+                        ),
+                      );
+                    },
+                  ).toList(),
                 ),
-                Expanded(
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                   child: GridView.builder( 
                     itemCount: productList.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -187,11 +211,11 @@ class _MainPageState extends State<MainPage> {
                       );
                     },
                   ),
-                )
-              ],
-            );
-          }
-        ),
+                ),
+              )
+            ],
+          );
+        }
       ),
     );
   }
