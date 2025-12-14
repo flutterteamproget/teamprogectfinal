@@ -286,7 +286,7 @@ Future insertAction()async{
 
 var buyInsert = Buy(
 
-  
+  u_seq: value[4],
   p_seq: value[3],
   br_seq: selectedbranch!.br_seq,
   b_date: today.toString().substring(0,10),

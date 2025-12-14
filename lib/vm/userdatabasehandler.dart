@@ -40,20 +40,21 @@ Future<Database> initializeDB() async{
   );
 }
 //로그인
-Future<int> queryLogincheck(String u_id,String u_password)async{
-    final Database db =await initializeDB();
-    final List<Map<String,Object?>> result =await db.rawQuery(
-      """
-      select count(u_id) as cnt
-      from user
-      where u_id=? and u_password=?
+Future<int?> queryLogin(String u_id, String u_password) async {
+  final Database db = await initializeDB();
 
-      """,
-      [u_id,u_password],
-    );
-    int count = result.first['cnt'] as int;
-    return count;
-   }
+  final result = await db.rawQuery(
+    '''
+    SELECT u_seq
+    FROM user
+    WHERE u_id = ? AND u_password = ?
+    ''',
+    [u_id, u_password],
+  );
+
+  if (result.isEmpty) return null;
+  return result.first['u_seq'] as int;
+}
 
 //회원가입
 Future<int> insertUser(User user) async{

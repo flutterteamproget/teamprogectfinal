@@ -150,29 +150,34 @@ class _HomeState extends State<Home> {
     );
   }//build
 
-  logincheck() async{
-  
- int count=await handler.queryLogincheck(
-  idcontroller.text,
-   pwcontroller.text
-   );
-
-  if(idcontroller.text.trim().isEmpty||pwcontroller.text.isEmpty){
-    Get.snackbar("로그인실패", "아이디 또는 비밀번호를 입력해주세요",
-    backgroundColor: Colors.red,
-
+  logincheck() async {
+  if (idcontroller.text.trim().isEmpty ||
+      pwcontroller.text.trim().isEmpty) {
+    Get.snackbar(
+      "로그인실패",
+      "아이디 또는 비밀번호를 입력해주세요",
+      backgroundColor: Colors.red,
     );
-  }else if(count==0){
-   Get.snackbar("로그인실패", "아이디 또는 비밀번호가 틀립니다",
-    backgroundColor: Colors.red,
-
-    );
-  }else{
-     Get.snackbar("로그인성공", "환영합니다",);
-     Get.to(MainPage());
+    return;
   }
 
-      
+  final int? uSeq = await handler.queryLogin(
+    idcontroller.text.trim(),
+    pwcontroller.text.trim(),
+  );
 
+  if (uSeq == null) {
+    Get.snackbar(
+      "로그인실패",
+      "아이디 또는 비밀번호가 틀립니다",
+      backgroundColor: Colors.red,
+    );
+  } else {
+    Get.snackbar("로그인성공", "환영합니다");
+    Get.to(
+      () => MainPage(uSeq: uSeq,),
+      arguments: uSeq, 
+    );
   }
+}
 }//class
