@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:teamprogectfinal/util/color.dart';
@@ -34,13 +36,10 @@ class _MyPageState extends State<MyPage> {
         backgroundColor: PColor.appBarBackgroundColor
       ),
       body: FutureBuilder(
-        future: loginHandler.queryUser(),
+        future: loginHandler.queryUser2(1),
         builder: (context, snapshot) {
           return snapshot.hasData && snapshot.data!.isNotEmpty
-              ? ListView.builder(
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    return Column(
+              ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
@@ -59,13 +58,13 @@ class _MyPageState extends State<MyPage> {
                                     width: 80,
                                     height: 80,
                                     child: CircleAvatar(
-                                      backgroundImage: MemoryImage(snapshot.data![index].u_image!),
+                                      backgroundImage: MemoryImage(snapshot.data!['u_image'] as Uint8List),
                                       backgroundColor: Colors.grey,
                                     ),
                                   ),
                                 ),
                                 Text(
-                                  '${snapshot.data![index].u_name}님 환영합니다.',
+                                  '${snapshot.data!['u_name']}님 환영합니다.',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
@@ -80,11 +79,11 @@ class _MyPageState extends State<MyPage> {
                                           Get.to(
                                             MyUpdate(),
                                             arguments: [
-                                              snapshot.data![index].u_seq,
-                                              snapshot.data![index].u_name,
-                                              snapshot.data![index].u_id,
-                                              snapshot.data![index].u_phone,
-                                              snapshot.data![index].u_image,
+                                              snapshot.data!['u_seq'],
+                                              snapshot.data!['u_name'],
+                                              snapshot.data!['u_id'],
+                                              snapshot.data!['u_phone'],
+                                              snapshot.data!['u_image']
                                             ]
                                           )!.then((value) => reloadData());
                                         },
@@ -130,16 +129,7 @@ class _MyPageState extends State<MyPage> {
                         ),
                         Divider(color: PColor.borderColor),
                     FutureBuilder(
-                      future: buyHandler.queryBuyDate(1), // <- 1 대신 구매번호 b_seq 불러오기
-                      builder: (context, snapshot) {
-                        return snapshot.hasData && snapshot.data!.isNotEmpty
-                        ? Text(snapshot.data!)
-                        : Center(
-                          child: Text('데이터가 없습니다.'));
-                      },
-                    ),
-                    FutureBuilder(
-                      future: buyHandler.queryBuyProduct(1), // <- 1 대신 구매번호 b_seq 불러오기
+                      future: buyHandler.queryBuy2(1), // <- 1 대신 구매번호 b_seq 불러오기
                       builder: (context, snapshot) {
                         return snapshot.hasData && snapshot.data!.isNotEmpty
                         ? ListView.builder(
@@ -151,7 +141,7 @@ class _MyPageState extends State<MyPage> {
                               child: Column(
                                 children: [
                                   Text(
-                                    snapshot.data![index].b_date,
+                                    snapshot.data!['b_date'].toString(),
                                     style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -162,10 +152,10 @@ class _MyPageState extends State<MyPage> {
                                       Get.to(
                                         Buydetail(),
                                         arguments: [
-                                          snapshot.data![index].b_seq,
-                                          snapshot.data![index].b_date,
-                                          snapshot.data![index].b_price,
-                                          snapshot.data![index].b_quantity,
+                                          snapshot.data!['b_seq'],
+                                          snapshot.data!['b_date'],
+                                          snapshot.data!['b_price'],
+                                          snapshot.data!['b_quantity'],
                                         ]
                                       );
                                     }, 
@@ -181,8 +171,8 @@ class _MyPageState extends State<MyPage> {
                                     '''
                                       (제조사 m_name)
                                       (상품명 p_name)
-                                      (사이즈 p_size, ${snapshot.data![index].b_quantity})
-                                      ${snapshot.data![index].b_price}
+                                      (사이즈 p_size, ${snapshot.data!['b_quantity']})
+                                      ${snapshot.data!['b_price']}
                                     '''
                                   )
                                 ],
@@ -196,9 +186,7 @@ class _MyPageState extends State<MyPage> {
                       },),
                         Divider(color: PColor.borderColor),
                       ],
-                    );
-                  },
-                )
+                    )
               : Center(child: CircularProgressIndicator());
         },
       ),

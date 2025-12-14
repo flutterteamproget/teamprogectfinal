@@ -77,21 +77,19 @@ Future<int> insertBuy(Buy buy) async{
 }
 
 
-// 구매 날짜
-// select b_date from buy
-// where b_seq
-Future<String?> queryBuyDate(int b_seq) async{
+// key값에 따른 구매데이터 불러오기
+Future<Map<String, Object?>?> queryBuy2(int b_seq) async{
     final Database db = await initializeDB();
     final List<Map<String, Object?>> queryResults = await db.rawQuery(
       """
-      select b_date from buy
+      select * from buy
       where b_seq = ?
       """,
       [b_seq]
     ); 
     // queryResults = [{b_date : 2025-12-11}], [], ...
     if(queryResults.isNotEmpty){
-      return queryResults[0]['b_date'].toString();
+      return queryResults[0];
     }else{
       return null;
     }
