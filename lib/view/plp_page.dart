@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:teamprogectfinal/model/maker.dart';
 import 'package:teamprogectfinal/model/product.dart';
 import 'package:teamprogectfinal/util/color.dart';
 import 'package:teamprogectfinal/util/font_size.dart';
+import 'package:teamprogectfinal/view/pdp_page.dart';
 import 'package:teamprogectfinal/vm/makerdatabasehandler.dart';
 import 'package:teamprogectfinal/vm/productdatabasehandler.dart';
 
@@ -148,35 +150,43 @@ class _PlpPageState extends State<PlpPage> {
                       childAspectRatio: 0.55,
                     ), 
                     itemBuilder: (context, index) {
-                      return Container(
-                        color: Colors.white,
-                        child: Column(
-                          children: [
-                            Image.memory(
-                              productList[index].p_image
-                            ),
-                            Text(
-                              style: TextStyle(
-                                fontSize: FontSize.productTitle,
-                                fontWeight: FontWeight.bold
+                      return GestureDetector(
+                        onTap: () => Get.to(PdpPage(),
+                            arguments: [
+                              productList[index].p_name,
+                              productList[index].p_price,
+                              productList[index].p_image,
+                            ]),
+                        child: Container(
+                          color: Colors.white,
+                          child: Column(
+                            children: [
+                              Image.memory(
+                                productList[index].p_image
                               ),
-                              productList[index].m_name!
-                            ),
-                            Text(
-                              style: TextStyle(
-                                fontSize: FontSize.greylittle,
-                                color: Colors.grey
+                              Text(
+                                style: TextStyle(
+                                  fontSize: FontSize.productTitle,
+                                  fontWeight: FontWeight.bold
+                                ),
+                                productList[index].m_name!
                               ),
-                              productList[index].p_name
-                            ),
-                            Text(
-                              style: TextStyle(
-                                fontSize: FontSize.productTitle,
-                                fontWeight: FontWeight.bold
+                              Text(
+                                style: TextStyle(
+                                  fontSize: FontSize.greylittle,
+                                  color: Colors.grey
+                                ),
+                                productList[index].p_name
                               ),
-                              productList[index].p_price.toString()
-                            ),
-                          ],
+                              Text(
+                                style: TextStyle(
+                                  fontSize: FontSize.productTitle,
+                                  fontWeight: FontWeight.bold
+                                ),
+                                productList[index].p_price.toString()
+                              ),
+                            ],
+                          ),
                         ),
                       );
                     },

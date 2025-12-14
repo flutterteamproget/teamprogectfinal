@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:teamprogectfinal/view/drawerpage.dart';
+import 'package:teamprogectfinal/view/home.dart';
 import 'package:teamprogectfinal/view/main_page.dart';
 import 'package:teamprogectfinal/view/my_page.dart';
 import 'package:teamprogectfinal/view/plp_page.dart';
@@ -24,7 +26,7 @@ class MyApp extends StatelessWidget {
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
      
-      home: const PlpPage(),
+      home: const MainPage(),
     );
   }
 }
