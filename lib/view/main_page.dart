@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:teamprogectfinal/model/category_gender.dart';
 import 'package:teamprogectfinal/model/product.dart';
 import 'package:teamprogectfinal/util/color.dart';
@@ -17,6 +18,13 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+   List<String> bannerImages = [
+   'images/banner.png', 
+  'images/main_banner_01.jpg',
+  'images/main_banner_02.jpg',
+  'images/main_banner_03.jpg',
+];
+  late PageController pageController;
   late int selectedCategory;
   late bool isSearching;
   late Genderdatabasehandler genderdatabasehandler;
@@ -26,6 +34,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
+    pageController=PageController();
     genderdatabasehandler = Genderdatabasehandler();
     productdatabasehandler = Productdatabasehandler();
     searchController = TextEditingController();
@@ -33,6 +42,7 @@ class _MainPageState extends State<MainPage> {
     isSearching = false;
   }
 
+  
   //페이지 기본 데이터 받아오기
   Future<({
     List<CategoryGender> genderList,
@@ -50,9 +60,9 @@ class _MainPageState extends State<MainPage> {
       print(searchController.text);
       productList = await productdatabasehandler.queryProductSearch(searchController.text);
     }else{
-      if(selectedCategory == 0){//선택된 카테고리에 따라 제품 보여주기
+      if(selectedCategory == 1){//선택된 카테고리에 따라 제품 보여주기
         productList = await productdatabasehandler.queryProduct();
-      }else if(selectedCategory == 1){
+      }else if(selectedCategory == 0){
         productList = await productdatabasehandler.queryProductCategory('m_seq', 1);
       }else{
         productList = await productdatabasehandler.queryProductCategory('m_seq', 2);
@@ -97,12 +107,40 @@ class _MainPageState extends State<MainPage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: Image.asset("images/banner.png"),
-                ),
-              ),
+  padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+  child: Column(
+    children: [
+      SizedBox(
+        height: 260,
+        width: MediaQuery.of(context).size.width,
+        child: PageView.builder(
+          controller: pageController,
+          itemCount: bannerImages.length,
+          itemBuilder: (context, index) {
+            return Image.asset(
+              bannerImages[index],
+              fit: BoxFit.cover,
+            );
+          },
+        ),
+      ),
+
+      const SizedBox(height: 8),
+
+      SmoothPageIndicator(
+        controller: pageController,
+        count: bannerImages.length,
+        effect: ExpandingDotsEffect(
+          dotHeight: 6,
+          dotWidth: 6,
+          expansionFactor: 4,
+          activeDotColor: PColor.primaryColor,
+          dotColor: Colors.grey.shade400,
+        ),
+      ),
+    ],
+  ),
+),
               Padding(
                 padding: const EdgeInsets.fromLTRB(20,0,20,0),
                 child: TextField( //검색창
