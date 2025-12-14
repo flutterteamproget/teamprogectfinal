@@ -26,93 +26,125 @@ class _HomeState extends State<Home> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-          Container(
-            width: 250,
-            height: 350,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: Colors.black
-              )
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("ID",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold
-                ),),
-                SizedBox(
-                  width: 220,
-                  height: 40,
-                  child: TextField(
-                    controller: idcontroller,
-                    decoration: InputDecoration(
-                       enabledBorder: OutlineInputBorder(
-                       
-                        borderSide: BorderSide(
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+            Container(
+              width: 300,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: Colors.black
+                )
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "아이디",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 12),
+                      child: SizedBox(
+                        height: 40,
+                        child: TextField(
+                          controller: idcontroller,
+                          decoration: InputDecoration(
+                             enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.black
+                              )
+                            ),
+                            hintText: "아이디를 입력하세요",
+                            hintStyle: TextStyle(
+                              fontSize: 14
+                            ),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 13)
+                          ),
                           
-                          color: Colors.black
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "비밀번호",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                      child: SizedBox(
+                        height: 40,
+                        child: TextField(
+                          controller: pwcontroller,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.black
+                              )
+                            ),
+                            hintText: "비밀번호를 입력하세요",
+                            hintStyle: TextStyle(
+                              fontSize: 14
+                            ),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 13)
+                          ),
+                        ),
+                      ),
+                    ),
+                    ElevatedButton(
+                      
+                      onPressed: () {
+                        logincheck();
+                      },
+                      child: Text("로그인"),
+                      style: ElevatedButton.styleFrom(
+                       
+                        backgroundColor: Colors.black,
+                        foregroundColor: Colors.white,
+                        minimumSize: Size(300, 40),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadiusGeometry.circular(4)
+                        ),
+                      ),
+                      ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GestureDetector(
+                        onTap: () => Get.to(Signup()),
+                        child: Text(
+                          "회원가입",
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                          ),
                         )
                       ),
-                      labelText: "ID",
-                    ),
-                    
-                  ),
+                    )
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                  child: Text("Password"),
-                ),
-                SizedBox(
-                  width: 220,
-                  height: 40,
-                  child: TextField(
-                    controller: pwcontroller,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.black
-                        )
-                      ),
-                      labelText: "PW",
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                  child: ElevatedButton(
-                    
-                    onPressed: () {
-                      logincheck();
-                    },
-                    child: Text("Login"),
-                    style: ElevatedButton.styleFrom(
-                     
-                      backgroundColor: Colors.black,
-                      foregroundColor: Colors.white,
-                      minimumSize: Size(220, 40),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadiusGeometry.circular(4)
-                      ),
-                    ),
-                    ),
-                ),
-                GestureDetector(
-                  onTap: () => Get.to(Signup()),
-                  child: Text("회원가입"))
-              ],
+              ),
+            
             ),
-          
+            ],
           ),
-          ],
         ),
       ),
     );
