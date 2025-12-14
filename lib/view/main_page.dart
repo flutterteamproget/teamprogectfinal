@@ -56,15 +56,14 @@ class _MainPageState extends State<MainPage> {
     List<Product> productList;
     
     if(isSearching){ //검색 중일 경우
-      print(searchController.text);
       productList = await productdatabasehandler.queryProductSearch(searchController.text, "이름순");
     }else{
-      if(selectedCategory == 1){//선택된 카테고리에 따라 제품 보여주기
+      if(selectedCategory == 0){//선택된 카테고리에 따라 제품 보여주기
         productList = await productdatabasehandler.queryProduct("이름순");
-      }else if(selectedCategory == 0){
-        productList = await productdatabasehandler.queryProductCategory('m_seq', 1, "이름순");
+      }else if(selectedCategory == 1){
+        productList = await productdatabasehandler.queryProductCategory('gc_seq', 1, "이름순");
       }else{
-        productList = await productdatabasehandler.queryProductCategory('m_seq', 2, "이름순");
+        productList = await productdatabasehandler.queryProductCategory('gc_seq', 2, "이름순");
       }
     }
 
