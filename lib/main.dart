@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
      
-      home: const Tabbarview(useq: 1,),
+      home: const MyPage(),
     );
   }
 }
