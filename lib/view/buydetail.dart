@@ -162,7 +162,7 @@ class _BuydetailState extends State<Buydetail> {
                   style: TextStyle(fontSize: 16),
                 ),
                 FutureBuilder(
-                  future: handler.queryProductPrice(1, value[0]), // get argument로 구매번호 불러오기, u_seq 필요한지아닌지
+                  future: handler.queryProductPrice(value[0]), // get argument로 구매번호 불러오기, u_seq 필요한지아닌지
                   builder: (context, snapshot) {
                     return snapshot.hasData && snapshot.data!.isNotEmpty
                     ? Text('${snapshot.data!}원')
