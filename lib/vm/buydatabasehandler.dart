@@ -90,6 +90,8 @@ Future<List> queryBuy2(int u_seq) async{
       on p.p_seq = b.p_seq
       inner join user as u
       on b.u_seq = u.u_seq
+      inner join size_category as sc
+      on sc.sc_seq = p.sc_seq
       where u.u_seq = ?
       """,
       [u_seq]
@@ -194,7 +196,7 @@ Future<Map?> queryBranchPrice() async{
   }
 
   // 자주 이용한 브랜드
-  Future<List<Map<String, Object?>>?> queryFavoriteMaker() async{
+  Future<List<Map<String, Object?>>?> queryFavoriteMaker(int u_seq) async{
     final Database db = await initializeDB();
     final List<Map<String, Object?>> queryResults = await db.rawQuery(
       """
@@ -203,9 +205,14 @@ Future<Map?> queryBranchPrice() async{
       on m.m_seq = p.m_seq
       inner join buy as b
       on b.p_seq = p.p_seq
+	  inner join user as u
+	  on u.u_seq = b.u_seq
+	  where u.u_seq = ?
       group by m.m_seq
       order by count(m.m_seq) DESC
+      
       """,
+      [u_seq]
     ); 
     // queryResults = [{b_date : 2025-12-11}], [], ...
     if(queryResults.isNotEmpty){
