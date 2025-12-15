@@ -154,7 +154,7 @@ Future<String?> queryProductPrice(int b_seq) async{
   }
 
 // 지점별 구매액
-Future<Map?> queryBranchPrice() async{
+Future<Map?> queryBranchPrice(int u_seq) async{
     final Database db = await initializeDB();
     final List<Map<String, Object?>> queryResults = await db.rawQuery(
       """
@@ -163,9 +163,11 @@ Future<Map?> queryBranchPrice() async{
       on br.br_seq = b.br_seq
 	    inner join user as u
 	    on b.u_seq = u.u_seq
+      where u.u_seq = ?
       group by b.br_seq
       order by sum(b_price) desc
       """,
+      [u_seq]
     ); 
     // queryResults = [{b_date : 2025-12-11}], [], ...
     if(queryResults.isNotEmpty){
@@ -176,16 +178,20 @@ Future<Map?> queryBranchPrice() async{
   }
 
   // 가장 많이 방문한 지점, 방문 횟수
-  Future<Map?> queryBranchVisit() async{
+  Future<Map?> queryBranchVisit(int u_seq) async{
     final Database db = await initializeDB();
     final List<Map<String, Object?>> queryResults = await db.rawQuery(
       """
       select br_name, count(b.br_seq) from branch as br
       inner join buy as b
       on b.br_seq = br.br_seq
+      inner join user as u
+      on u.u_seq = b.u_seq
+      where u.u_seq = ?
       group by b.br_seq
       order by count(b.br_seq) desc
       """,
+      [u_seq]
     ); 
     // queryResults = [{b_date : 2025-12-11}], [], ...
     if(queryResults.isNotEmpty){
