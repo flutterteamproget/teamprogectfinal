@@ -164,18 +164,18 @@ final ImagePicker picker =ImagePicker();
                         pwccontroller.text.trim().isEmpty||
                         pwcheckcontroller.text.trim().isEmpty||
                         phonecontroller.text.trim().isEmpty ){
-                        Get.snackbar("회원가입 실패", "빈칸을 전부 채워주세요.",
+                        Get.snackbar("회원가입 실패", "빈칸을 전부 채워주세요",
                          backgroundColor: Colors.red,);
                                         
                       }else if(
                         pwccontroller.text.trim() != pwcheckcontroller.text.trim()
                         
                       ){
-                       Get.snackbar("회원가입 실패", "비밀번호가 일치하지 않습니다. 다시 입력해주세요.",
+                       Get.snackbar("회원가입 실패", "비밀번호가 일치하지 않습니다. 다시 입력해주세요",
                                   backgroundColor: Colors.red,);
       
                       }else if(imageFile ==null){
-                        Get.snackbar("회원가입 실패", "프로필 사진을 넣어주세요.",
+                        Get.snackbar("회원가입 실패", "프로필 사진을 넣어주세요",
                          backgroundColor: Colors.red,);
                       }else{
                         insertAction();
