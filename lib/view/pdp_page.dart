@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:teamprogectfinal/model/branch.dart';
 import 'package:teamprogectfinal/model/buy.dart';
 import 'package:teamprogectfinal/model/category_color.dart';
 import 'package:teamprogectfinal/model/category_size.dart';
 import 'package:teamprogectfinal/model/product.dart';
+import 'package:teamprogectfinal/util/color.dart';
 import 'package:teamprogectfinal/util/font_size.dart';
 import 'package:teamprogectfinal/vm/branchdatabasehandler.dart';
 import 'package:teamprogectfinal/vm/buydatabasehandler.dart';
@@ -20,11 +22,14 @@ class PdpPage extends StatefulWidget {
 }
 
 class _PdpPageState extends State<PdpPage> {
+
+  late List<String> bannerImages;
   DateTime today =DateTime.now();
   late int quantity;
   late Buydatabasehandler buyhandler;
   List<CategorySize> sizeList = [];
   CategorySize? selectedSize;
+  late PageController pageController;
   late SizeCategoryDatabasehandler psizeHandler;
 
   List<Branch> branchList = [];
@@ -42,11 +47,50 @@ class _PdpPageState extends State<PdpPage> {
     branchhandler=Branchdatabasehandler();
     colorhandler=Colordatabasehandler();
     buyhandler=Buydatabasehandler();
+    pageController=PageController();
     quantity=0;
     loadsize();
     loadbranch();
     loadcolor();
+
+    final List value = Get.arguments;
+    final int mSeq = value[5]; 
+
+    bannerImages = makerImageMap[mSeq] ??
+      [];
   }
+
+  final Map<int, List<String>> makerImageMap = {
+  1: [ //  누오보
+    'images/noa1.jpg',
+    'images/noa2.jpg',
+    'images/noa3.jpg',
+    'images/noa4.jpg',
+
+   
+  ],
+  2: [ // 스테파노로시
+    'images/co1.jpg',
+    'images/co2.jpg',
+    'images/co3.jpg',
+    'images/co4.jpg',
+
+  ],
+  3: [ // 반스
+    'images/old1.jpg',
+    'images/old2.jpg',
+    'images/old3.jpg',
+    'images/old4.jpg',
+  ],
+  4: [ // 에이비씨 셀렉트
+    
+    'images/light1.jpg',
+    'images/light2.jpg',
+    'images/light3.jpg',
+    'images/light4.jpg',
+   
+  ],
+};
 Future loadsize() async {
   List<CategorySize> size =
       await psizeHandler.querySizeByProduct(value[0]);
@@ -95,10 +139,37 @@ Future loadcolor() async {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            child: Image.memory(value[2]),
-          ),
+          SizedBox(
+  height: 350,
+  width: MediaQuery.of(context).size.width,
+  child: PageView.builder(
+    controller: pageController,
+    itemCount: bannerImages.length,
+    itemBuilder: (context, index) {
+      return Image.asset(
+        bannerImages[index],
+        fit: BoxFit.cover,
+        alignment: const Alignment(0, -0.5),
+      );
+    },
+  ),
+),
+
+const SizedBox(height: 8),
+
+Center(
+  child: SmoothPageIndicator(
+    controller: pageController,
+    count: bannerImages.length,
+    effect: ExpandingDotsEffect(
+      dotHeight: 6,
+      dotWidth: 6,
+      expansionFactor: 3,
+      activeDotColor: PColor.primaryColor,
+      dotColor: Colors.grey.shade400,
+    ),
+  ),
+),
           Divider(),
 
           Column(
@@ -109,15 +180,15 @@ Future loadcolor() async {
                 child: Text(
                   value[0],
                   style: TextStyle(
-                    fontSize: FontSize.greylittle,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
               Text(
-                "${value[1]}원",
+                " ${value[1]}원",
                 style: TextStyle(
-                  fontSize: FontSize.greylittle,
+                  fontSize:20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -198,7 +269,7 @@ Future loadcolor() async {
                   const SizedBox(height: 16),
                   Divider(),
 
-                  /// 👇 구매 수량 UI
+                  ///  구매 수량 UI
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Row(

@@ -312,11 +312,11 @@ Future<List<Product>> queryProductByMaker() async {
   final Database db = await initializeDB();
   final result = await db.rawQuery(
     '''
-    SELECT *
-    FROM product p
-    INNER JOIN maker m
+    select *
+    from product p
+    inner join maker m
     ON p.m_seq = m.m_seq
-    GROUP BY m.m_name
+    group by m.m_name
 
 
     '''
