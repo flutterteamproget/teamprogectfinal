@@ -8,6 +8,7 @@ import 'package:teamprogectfinal/model/category_kind.dart';
 import 'package:teamprogectfinal/model/category_size.dart';
 import 'package:teamprogectfinal/model/maker.dart';
 import 'package:teamprogectfinal/view/my_page.dart';
+import 'package:teamprogectfinal/view/plp_drawer_page.dart';
 import 'package:teamprogectfinal/vm/colordatabasehandler.dart';
 import 'package:teamprogectfinal/vm/genderdatabasehandler.dart';
 import 'package:teamprogectfinal/vm/kind_category_databasehandler.dart';
@@ -146,19 +147,26 @@ class _DrawerpageState extends State<Drawerpage> {
                 height: 250,
                 child: ListView.builder(
                   itemCount: genderList.length,
-                  itemBuilder: (context, index) {
+                  itemBuilder: (context, index1) {
                     return ExpansionTile(
-                      title: Text(genderList[index].gc_name),
+                      title: Text(genderList[index1].gc_name),
                       children: [
                         SizedBox(
                           height: 250,
                           child: ListView.builder(
                             itemCount: kindList.length,
-                            itemBuilder: (context, index){
+                            itemBuilder: (context, index2){
                               return ListTile(
-                                title: Text(kindList[index].kc_name),
+                                title: Text(kindList[index2].kc_name),
                                 onTap: () {
-                                  //
+                                  Get.to(
+                                    PlpDrawerPage(),
+                                    arguments: [
+                                      ["gc_seq", genderList[index1].gc_seq], 
+                                      ["kc_seq", kindList[index2].kc_seq], 
+                                      ["${genderList[index1].gc_name} > ${kindList[index2].kc_name}"]
+                                    ]
+                                  );
                                 },
                               );
                             }
@@ -182,7 +190,13 @@ class _DrawerpageState extends State<Drawerpage> {
                             makerList[index].m_name
                           ),
                           onTap: () {
-                            //
+                            Get.to(
+                              PlpDrawerPage(),
+                              arguments: [
+                                ["m_seq", makerList[index].m_seq],
+                                [makerList[index].m_name]
+                              ]
+                            );
                           },
                         );
                       }

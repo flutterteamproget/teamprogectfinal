@@ -56,15 +56,14 @@ class _MainPageState extends State<MainPage> {
     List<Product> productList;
     
     if(isSearching){ //검색 중일 경우
-      print(searchController.text);
-      productList = await productdatabasehandler.queryProductSearch(searchController.text);
+      productList = await productdatabasehandler.queryProductSearch(searchController.text, "이름순");
     }else{
-      if(selectedCategory == 1){//선택된 카테고리에 따라 제품 보여주기
-        productList = await productdatabasehandler.queryProduct();
-      }else if(selectedCategory == 0){
-        productList = await productdatabasehandler.queryProductCategory('m_seq', 1);
+      if(selectedCategory == 0){//선택된 카테고리에 따라 제품 보여주기
+        productList = await productdatabasehandler.queryProduct("이름순");
+      }else if(selectedCategory == 1){
+        productList = await productdatabasehandler.queryProductCategory('gc_seq', 1, "이름순");
       }else{
-        productList = await productdatabasehandler.queryProductCategory('m_seq', 2);
+        productList = await productdatabasehandler.queryProductCategory('gc_seq', 2, "이름순");
       }
     }
 
@@ -81,7 +80,6 @@ class _MainPageState extends State<MainPage> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text('전체 상품'),
           backgroundColor: Colors.white,
           centerTitle: true,
         ),
@@ -223,31 +221,32 @@ class _MainPageState extends State<MainPage> {
                           child: Container(
                             color: Colors.white,
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Image.memory(
                                   productList[index].p_image
                                 ),
                                 Text(
-                                  style: TextStyle(
-                                    fontSize: FontSize.productTitle,
-                                    fontWeight: FontWeight.bold
-                                  ),
-                                  productList[index].m_name!
+                                style: TextStyle(
+                                  fontSize: FontSize.productTitle,
+                                  fontWeight: FontWeight.bold
                                 ),
-                                Text(
-                                  style: TextStyle(
-                                    fontSize: FontSize.greylittle,
-                                    color: Colors.grey
-                                  ),
-                                  productList[index].p_name
+                                " ${productList[index].m_name!}"
+                              ),
+                              Text(
+                                style: TextStyle(
+                                  fontSize: FontSize.greylittle,
+                                  color: Colors.grey
                                 ),
-                                Text(
-                                  style: TextStyle(
-                                    fontSize: FontSize.productTitle,
-                                    fontWeight: FontWeight.bold
-                                  ),
-                                  productList[index].p_price.toString()
+                                productList[index].p_name
+                              ),
+                              Text(
+                                style: TextStyle(
+                                  fontSize: FontSize.productTitle,
+                                  fontWeight: FontWeight.bold
                                 ),
+                                " ${productList[index].p_price.toString()}"
+                              ),
                               ],
                             ),
                           ),

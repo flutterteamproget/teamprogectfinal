@@ -8,26 +8,26 @@ import 'package:teamprogectfinal/view/pdp_page.dart';
 import 'package:teamprogectfinal/vm/makerdatabasehandler.dart';
 import 'package:teamprogectfinal/vm/productdatabasehandler.dart';
 
-class PlpPage extends StatefulWidget {
-  const PlpPage({super.key});
+class PlpDrawerPage extends StatefulWidget {
+  const PlpDrawerPage({super.key});
 
   @override
-  State<PlpPage> createState() => _PlpPageState();
+  State<PlpDrawerPage> createState() => _PlpDrawerPageState();
 }
 
-class _PlpPageState extends State<PlpPage> {
+class _PlpDrawerPageState extends State<PlpDrawerPage> {
   late int selectedCategory;
   late bool isSearching;
   late String selectedOrder;
   late List<String> orderList;
-  late Makerdatabasehandler makerdatabasehandler;
   late Productdatabasehandler productdatabasehandler;
   late TextEditingController searchController;
+
+  List<List> value = Get.arguments ?? []; //drawer에서 [카테고리 컬럼명, 시퀀스 값] 리스트 받아옴
 
   @override
   void initState() {
     super.initState();
-    makerdatabasehandler = Makerdatabasehandler();
     productdatabasehandler = Productdatabasehandler();
     searchController = TextEditingController();
     selectedCategory = 0;
@@ -38,35 +38,25 @@ class _PlpPageState extends State<PlpPage> {
 
   //페이지 기본 데이터 받아오기
   Future<({
-    List<Maker> makerList,
     List<Product> productList,
   })> loadPageData() async {
     //DB 초기화
-    await makerdatabasehandler.initializeDB();
     await productdatabasehandler.initializeDB();
 
     //리스트 데이터 받기
-    final makerList = await makerdatabasehandler.queryMaker();
     List<Product> productList;
     
     if(isSearching){ //검색 중일 경우
       productList = await productdatabasehandler.queryProductSearch(searchController.text, selectedOrder);
     }else{
-      if(selectedCategory == 0){//선택된 카테고리에 따라 제품 보여주기
-        productList = await productdatabasehandler.queryProduct(selectedOrder);
-      }else if(selectedCategory == 1){
-        productList = await productdatabasehandler.queryProductCategory('m_seq', 1, selectedOrder);
-      }else if(selectedCategory == 2){
-        productList = await productdatabasehandler.queryProductCategory('m_seq', 2, selectedOrder);
-      }else if(selectedCategory == 3){
-        productList = await productdatabasehandler.queryProductCategory('m_seq', 3, selectedOrder);
-      }else{
-        productList = await productdatabasehandler.queryProductCategory('m_seq', 4, selectedOrder);
+      if (value[0][0] == "m_seq"){ //브랜드 명을 눌렀을 경우
+        productList = await productdatabasehandler.queryProductCategory(value[0][0], value[0][1], selectedOrder);
+      }else{ //종류를 눌렀을 경우
+        productList = await productdatabasehandler.queryProductCategoryTwo(value[0][0], value[0][1], value[1][0], value[1][1], selectedOrder);
       }
     }
 
     return (
-      makerList: makerList,
       productList: productList,
     );
   }
@@ -76,7 +66,6 @@ class _PlpPageState extends State<PlpPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('전체 상품'),
         backgroundColor: Colors.white,
         centerTitle: true,
       ),
@@ -88,10 +77,19 @@ class _PlpPageState extends State<PlpPage> {
             if (!snapshot.hasData) { //로딩 중
               return Center(child: CircularProgressIndicator());
             }
-            List<Maker> makerList = snapshot.data!.makerList; //제조사 리스트
             List<Product> productList = snapshot.data!.productList; //제품 리스트
             return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                  child: Text(
+                    value[value.length-1][0],
+                    style: TextStyle(
+                      fontSize: FontSize.productTitle
+                    ),                  
+                  ),
+                ),
                 TextField(
                   controller: searchController,
                   decoration: InputDecoration(
@@ -114,7 +112,7 @@ class _PlpPageState extends State<PlpPage> {
                   },
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -184,38 +182,6 @@ class _PlpPageState extends State<PlpPage> {
                         ),
                       ),
                     ],
-                  ),
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: makerList.map(
-                      (e) {
-                        return GestureDetector(
-                          onTap: () { //선택된 제조사 변경
-                            isSearching = false;
-                            if(selectedCategory == e.m_seq){
-                              selectedCategory = 0;
-                            }else{
-                              selectedCategory = e.m_seq!;
-                            }
-                            setState(() {});
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Text(
-                              style: TextStyle( //제조사 이름 버튼
-                                color: selectedCategory == e.m_seq ? PColor.primaryColor : Colors.black,
-                                fontWeight: selectedCategory == e.m_seq ? FontWeight.bold : FontWeight.normal,
-                                fontSize: FontSize.productTitle
-                              ),
-                              e.m_name
-                            ),
-                          ),
-                        );
-                      },
-                    ).toList(),
                   ),
                 ),
                 Expanded(
