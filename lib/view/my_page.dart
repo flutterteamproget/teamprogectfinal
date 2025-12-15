@@ -134,15 +134,28 @@ class _MyPageState extends State<MyPage> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
                           child: FutureBuilder(
-                            future: buyHandler.queryFavoriteMaker(1), 
+                            future: buyHandler.queryFavoriteMaker(widget.uSeq), 
                             builder: (context, snapshot) {
                               return snapshot.hasData && snapshot.data!.isNotEmpty
                               ? Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('선호 메이커'),
-                                    Text('1위 ${snapshot.data![0]['m_name']}, 구매 횟수 ${snapshot.data![0]['count(m.m_seq)']}'),
-                                    Text('2위 ${snapshot.data![1]['m_name']}, 구매 횟수 ${snapshot.data![1]['count(m.m_seq)']}'),
+                                    Row(
+                                      children: [
+                                        Icon(Icons.arrow_right_outlined),
+                                        Text(
+                                          '선호 메이커', style: TextStyle(fontSize: 16),),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text('  1위 ${snapshot.data![0]['m_name']}, 구매 횟수 ${snapshot.data![0]['count(m.m_seq)']}'),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text('  2위 ${snapshot.data![1]['m_name']}, 구매 횟수 ${snapshot.data![1]['count(m.m_seq)']}'),
+                                      ],
+                                    ),
                                   ],
                               )
                               : Text('불러올 데이터가 없습니다.');
@@ -157,10 +170,25 @@ class _MyPageState extends State<MyPage> {
                             builder: (context, snapshot) {
                               return snapshot.hasData && snapshot.data!.isNotEmpty
                               ? Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('\n최다 방문 지점'),
-                                  Text('${snapshot.data!['br_name']} 방문 횟수: ${snapshot.data!['count(b.br_seq)']}번'),
+                                    Row(
+                                      children: [
+                                        Icon(Icons.arrow_right_outlined),
+                                        Text(
+                                          '최다 방문 지점', style: TextStyle(fontSize: 16),),
+                                      ],
+                                    ),
+                                  Row(
+                                    children: [
+                                      Text('  ${snapshot.data!['br_name']}'),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text('  방문 횟수: '),
+                                      Text('${snapshot.data!['count(b.br_seq)']}번', style: TextStyle(fontWeight: FontWeight.bold),),
+                                    ],
+                                  )
                                 ],
                               )
                               : Text('불러올 데이터가 없습니다.');
@@ -175,10 +203,25 @@ class _MyPageState extends State<MyPage> {
                             builder: (context, snapshot) {
                               return snapshot.hasData && snapshot.data!.isNotEmpty
                               ? Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('\n최대 지출 지점'),
-                                  Text('${snapshot.data!['br_name']} 구매액: ${snapshot.data!['sum(b_price)']}원'),
+                                    Row(
+                                      children: [
+                                        Icon(Icons.arrow_right_outlined),
+                                        Text(
+                                          '최대 지출 지점', style: TextStyle(fontSize: 16),),
+                                      ],
+                                    ),
+                                  Row(
+                                    children: [
+                                      Text('  ${snapshot.data!['br_name']}'),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text('  구매액: '),
+                                      Text('${snapshot.data!['sum(b_price)']}원', style: TextStyle(fontWeight: FontWeight.bold),),
+                                    ],
+                                  )
                                 ],
                               )
                               : Text('불러올 데이터가 없습니다.');
