@@ -33,7 +33,7 @@ class _PlpDrawerPageState extends State<PlpDrawerPage> {
     selectedCategory = 0;
     isSearching = false;
     selectedOrder = "이름순";
-    orderList = ["이름순", "가격 높은순", "가격 낮은순", "브랜드순"];
+    orderList = ["이름순", "가격 높은순", "가격 낮은순", "브랜드순", "구매순"];
   }
 
   //페이지 기본 데이터 받아오기
