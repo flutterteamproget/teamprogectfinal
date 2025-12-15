@@ -254,14 +254,15 @@ class _PlpPageState extends State<PlpPage> {
                                     fontSize: FontSize.productTitle,
                                     fontWeight: FontWeight.bold
                                   ),
-                                  " ${productList[index].m_name!}"
+                                  " ${productList[index].m_name!}",
                                 ),
                                 Text(
                                   style: TextStyle(
                                     fontSize: FontSize.greylittle,
-                                    color: Colors.grey
+                                    color: Colors.grey,
                                   ),
-                                  productList[index].p_name
+                                  productList[index].p_name,
+                                  textAlign: TextAlign.start,
                                 ),
                                 Text(
                                   style: TextStyle(

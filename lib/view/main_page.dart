@@ -127,22 +127,25 @@ class _MainPageState extends State<MainPage> {
       
         const SizedBox(height: 8),
       
-        SmoothPageIndicator(
-          controller: pageController,
-          count: bannerImages.length,
-          effect: ExpandingDotsEffect(
-            dotHeight: 6,
-            dotWidth: 6,
-            expansionFactor: 3,
-            activeDotColor: PColor.primaryColor,
-            dotColor: Colors.grey.shade400,
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SmoothPageIndicator(
+            controller: pageController,
+            count: bannerImages.length,
+            effect: ExpandingDotsEffect(
+              dotHeight: 6,
+              dotWidth: 6,
+              expansionFactor: 3,
+              activeDotColor: PColor.primaryColor,
+              dotColor: Colors.grey.shade400,
+            ),
           ),
         ),
       ],
         ),
       ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(20,0,20,0),
+                  padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
                   child: TextField( //검색창
                     controller: searchController,
                     decoration: InputDecoration(

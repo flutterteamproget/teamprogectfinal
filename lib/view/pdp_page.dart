@@ -62,6 +62,7 @@ class _PdpPageState extends State<PdpPage> {
 
   final Map<int, List<String>> makerImageMap = {
   1: [ //  누오보
+    'images/noa0.jpg',
     'images/noa1.jpg',
     'images/noa2.jpg',
     'images/noa3.jpg',
@@ -70,6 +71,7 @@ class _PdpPageState extends State<PdpPage> {
    
   ],
   2: [ // 스테파노로시
+    'images/co0.jpg',
     'images/co1.jpg',
     'images/co2.jpg',
     'images/co3.jpg',
@@ -77,13 +79,14 @@ class _PdpPageState extends State<PdpPage> {
 
   ],
   3: [ // 반스
+    'images/old0.jpg',
     'images/old1.jpg',
     'images/old2.jpg',
     'images/old3.jpg',
     'images/old4.jpg',
   ],
   4: [ // 에이비씨 셀렉트
-    
+    'images/light0.jpg',
     'images/light1.jpg',
     'images/light2.jpg',
     'images/light3.jpg',
@@ -123,11 +126,16 @@ Future loadcolor() async {
           onPressed: () {
             bottomsheetbuy();
           },
-          child: Text("구매하기"),
+          child: Text(
+            "구매하기",
+            style: TextStyle(
+              fontSize: 16,
+            ),
+          ),
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.black,
             foregroundColor: Colors.white,
-            minimumSize: Size(220, 40),
+            minimumSize: Size(220, 60),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadiusGeometry.circular(4),
             ),
@@ -157,42 +165,47 @@ Future loadcolor() async {
 
 const SizedBox(height: 8),
 
-Center(
-  child: SmoothPageIndicator(
-    controller: pageController,
-    count: bannerImages.length,
-    effect: ExpandingDotsEffect(
-      dotHeight: 6,
-      dotWidth: 6,
-      expansionFactor: 3,
-      activeDotColor: PColor.primaryColor,
-      dotColor: Colors.grey.shade400,
+Padding(
+  padding: const EdgeInsets.all(8.0),
+  child: Center(
+    child: SmoothPageIndicator(
+      controller: pageController,
+      count: bannerImages.length,
+      effect: ExpandingDotsEffect(
+        dotHeight: 6,
+        dotWidth: 6,
+        expansionFactor: 3,
+        activeDotColor: PColor.primaryColor,
+        dotColor: Colors.grey.shade400,
+      ),
     ),
   ),
 ),
-          Divider(),
 
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                child: Text(
-                  value[0],
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 20),
+                  child: Text(
+                    value[0],
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Text(
+                  " ${value[1]}원",
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize:20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-              ),
-              Text(
-                " ${value[1]}원",
-                style: TextStyle(
-                  fontSize:20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
@@ -333,7 +346,11 @@ Center(
                   child: ElevatedButton(
                     onPressed: () {
                       if(quantity==0){
-                        Get.snackbar("경고", "수량을 정해주세요");
+                        Get.snackbar(
+                          "경고",
+                          "수량을 정해주세요",
+                          backgroundColor: Colors.red,
+                        );
                         
                       }else{
                       insertAction();

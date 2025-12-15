@@ -180,14 +180,14 @@ class _MyUpdateState extends State<MyUpdate> {
                         phonecontroller.text.trim().isEmpty) {
                       Get.snackbar(
                         "수정 실패",
-                        "빈칸을 전부 채워주세요.",
+                        "빈칸을 전부 채워주세요",
                         backgroundColor: Colors.red,
                       );
                     } else if (pwccontroller.text.trim() !=
                         pwcheckcontroller.text.trim()) {
                       Get.snackbar(
                         "수정 실패",
-                        "비밀번호가 일치하지 않습니다. 다시 입력해주세요.",
+                        "비밀번호가 일치하지 않습니다. 다시 입력해주세요",
                         backgroundColor: Colors.red,
                       );
                     } else if (firstDisp==0) {
