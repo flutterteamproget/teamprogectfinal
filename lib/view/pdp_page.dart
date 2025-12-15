@@ -261,9 +261,14 @@ Future loadcolor() async {
                   height: 45,
                   child: ElevatedButton(
                     onPressed: () {
-                     
+                      if(quantity==0){
+                        Get.snackbar("경고", "수량을 정해주세요");
+                        
+                      }else{
                       insertAction();
                       Get.back();
+
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black,

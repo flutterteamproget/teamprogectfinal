@@ -36,7 +36,7 @@ class _TabbarviewState extends State<Tabbarview>
         controller: controller,
         children: [
           MainPage(uSeq: widget.useq),
-          MyPage(),
+          MyPage(uSeq: widget.useq,),
           PlpPage(uSeq: widget.useq,),
         ],
       ),

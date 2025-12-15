@@ -11,7 +11,8 @@ import 'package:teamprogectfinal/vm/buydatabasehandler.dart';
 import 'package:teamprogectfinal/vm/userdatabasehandler.dart';
 
 class MyPage extends StatefulWidget {
-  const MyPage({super.key});
+  final int uSeq;
+  const MyPage({super.key,required this.uSeq});
 
   @override
   State<MyPage> createState() => _MyPageState();
@@ -37,7 +38,7 @@ class _MyPageState extends State<MyPage> {
         backgroundColor: PColor.appBarBackgroundColor
       ),
       body: FutureBuilder(
-        future: loginHandler.queryUser2(1),
+        future: loginHandler.queryUser2(widget.uSeq),
         builder: (context, snapshot) {
           return snapshot.hasData && snapshot.data!.isNotEmpty
               ? Column(
@@ -202,7 +203,7 @@ class _MyPageState extends State<MyPage> {
                       child: Padding(
                         padding: const EdgeInsets.all(20.0),
                         child: FutureBuilder(
-                          future: buyHandler.queryBuy2(1), // <- 1 대신 u_seq 불러오기
+                          future: buyHandler.queryBuy2(widget.uSeq), // <- 1 대신 u_seq 불러오기
                           builder: (context, snapshot) {
                             return snapshot.hasData && snapshot.data!.isNotEmpty
                             ? ListView.builder(

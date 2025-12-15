@@ -128,7 +128,7 @@ class _DrawerpageState extends State<Drawerpage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         GestureDetector(
-                          onTap: () => Get.to(MyPage()),
+                          // onTap: () => Get.to(MyPage()),
                           child: CircleAvatar(
                             radius: 40,
                             backgroundImage: MemoryImage(snapshot.data!['u_image'] as Uint8List)),
