@@ -73,207 +73,210 @@ class _PlpPageState extends State<PlpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text('전체 상품'),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
         backgroundColor: Colors.white,
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: FutureBuilder(
-          future: loadPageData(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) { //로딩 중
-              return Center(child: CircularProgressIndicator());
-            }
-            List<Maker> makerList = snapshot.data!.makerList; //제조사 리스트
-            List<Product> productList = snapshot.data!.productList; //제품 리스트
-            return Column(
-              children: [
-                TextField(
-                  controller: searchController,
-                  decoration: InputDecoration(
-                    hintText: '검색어를 입력하세요',
-                    isDense: true,
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        selectedCategory = 0;
-                        isSearching = true;
-                        setState(() {});
-                      }, 
-                      icon: Icon(Icons.search)
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                  ),
-                  onChanged: (value) {
-                    // 자동검색
-                  },
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Text("총 "),
-                          Text(
-                            productList.length.toString(),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: PColor.primaryColor
-                            ),
-                          ),
-                          Text("개")
-                        ],
+        appBar: AppBar(
+          title: Text('전체 상품'),
+          backgroundColor: Colors.white,
+          centerTitle: true,
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: FutureBuilder(
+            future: loadPageData(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) { //로딩 중
+                return Center(child: CircularProgressIndicator());
+              }
+              List<Maker> makerList = snapshot.data!.makerList; //제조사 리스트
+              List<Product> productList = snapshot.data!.productList; //제품 리스트
+              return Column(
+                children: [
+                  TextField(
+                    controller: searchController,
+                    decoration: InputDecoration(
+                      hintText: '검색어를 입력하세요',
+                      isDense: true,
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          selectedCategory = 0;
+                          isSearching = true;
+                          setState(() {});
+                        }, 
+                        icon: Icon(Icons.search)
                       ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width/3,
-                        height: 30,
-                        child: DropdownButtonFormField<String>( //정렬 드롭다운
-                          initialValue: selectedOrder,
-                          isDense: true,
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 6,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(
-                                color: Colors.grey,
-                                width: 1,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                    onChanged: (value) {
+                      // 자동검색
+                    },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Text("총 "),
+                            Text(
+                              productList.length.toString(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: PColor.primaryColor
                               ),
                             ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(
-                                color: Colors.grey,
-                                width: 1,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(
-                                color: Colors.grey,
-                                width: 1,
-                              ),
-                            ),
-                          ),
-                          items: orderList.map(
-                            (e) {
-                              return DropdownMenuItem(
-                                value: e,
-                                child: Text(
-                                  e,
-                                  style: TextStyle(
-                                    fontSize: FontSize.greylittle
-                                  ),
-                                  ),
-                              );
-                            }
-                          ).toList(), 
-                          onChanged: (value) {
-                            selectedOrder = value!;
-                            setState(() {});
-                          },
+                            Text("개")
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: makerList.map(
-                      (e) {
-                        return GestureDetector(
-                          onTap: () { //선택된 제조사 변경
-                            isSearching = false;
-                            if(selectedCategory == e.m_seq){
-                              selectedCategory = 0;
-                            }else{
-                              selectedCategory = e.m_seq!;
-                            }
-                            setState(() {});
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Text(
-                              style: TextStyle( //제조사 이름 버튼
-                                color: selectedCategory == e.m_seq ? PColor.primaryColor : Colors.black,
-                                fontWeight: selectedCategory == e.m_seq ? FontWeight.bold : FontWeight.normal,
-                                fontSize: FontSize.productTitle
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width/3,
+                          height: 30,
+                          child: DropdownButtonFormField<String>( //정렬 드롭다운
+                            initialValue: selectedOrder,
+                            isDense: true,
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 6,
                               ),
-                              e.m_name
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                  color: Colors.grey,
+                                  width: 1,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                  color: Colors.grey,
+                                  width: 1,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                  color: Colors.grey,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
+                            items: orderList.map(
+                              (e) {
+                                return DropdownMenuItem(
+                                  value: e,
+                                  child: Text(
+                                    e,
+                                    style: TextStyle(
+                                      fontSize: FontSize.greylittle
+                                    ),
+                                    ),
+                                );
+                              }
+                            ).toList(), 
+                            onChanged: (value) {
+                              selectedOrder = value!;
+                              setState(() {});
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: makerList.map(
+                        (e) {
+                          return GestureDetector(
+                            onTap: () { //선택된 제조사 변경
+                              isSearching = false;
+                              if(selectedCategory == e.m_seq){
+                                selectedCategory = 0;
+                              }else{
+                                selectedCategory = e.m_seq!;
+                              }
+                              setState(() {});
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Text(
+                                style: TextStyle( //제조사 이름 버튼
+                                  color: selectedCategory == e.m_seq ? PColor.primaryColor : Colors.black,
+                                  fontWeight: selectedCategory == e.m_seq ? FontWeight.bold : FontWeight.normal,
+                                  fontSize: FontSize.productTitle
+                                ),
+                                e.m_name
+                              ),
+                            ),
+                          );
+                        },
+                      ).toList(),
+                    ),
+                  ),
+                  Expanded(
+                    child: GridView.builder( 
+                      itemCount: productList.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        childAspectRatio: 0.55,
+                      ), 
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () => Get.to(PdpPage(),
+                              arguments: [
+                                productList[index].p_name,
+                                productList[index].p_price,
+                                productList[index].p_image,
+                              ]),
+                          child: Container(
+                            color: Colors.white,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Image.memory(
+                                  productList[index].p_image
+                                ),
+                                Text(
+                                  style: TextStyle(
+                                    fontSize: FontSize.productTitle,
+                                    fontWeight: FontWeight.bold
+                                  ),
+                                  " ${productList[index].m_name!}"
+                                ),
+                                Text(
+                                  style: TextStyle(
+                                    fontSize: FontSize.greylittle,
+                                    color: Colors.grey
+                                  ),
+                                  productList[index].p_name
+                                ),
+                                Text(
+                                  style: TextStyle(
+                                    fontSize: FontSize.productTitle,
+                                    fontWeight: FontWeight.bold
+                                  ),
+                                  " ${productList[index].p_price.toString()}"
+                                ),
+                              ],
                             ),
                           ),
                         );
                       },
-                    ).toList(),
-                  ),
-                ),
-                Expanded(
-                  child: GridView.builder( 
-                    itemCount: productList.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                      childAspectRatio: 0.55,
-                    ), 
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () => Get.to(PdpPage(),
-                            arguments: [
-                              productList[index].p_name,
-                              productList[index].p_price,
-                              productList[index].p_image,
-                            ]),
-                        child: Container(
-                          color: Colors.white,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Image.memory(
-                                productList[index].p_image
-                              ),
-                              Text(
-                                style: TextStyle(
-                                  fontSize: FontSize.productTitle,
-                                  fontWeight: FontWeight.bold
-                                ),
-                                " ${productList[index].m_name!}"
-                              ),
-                              Text(
-                                style: TextStyle(
-                                  fontSize: FontSize.greylittle,
-                                  color: Colors.grey
-                                ),
-                                productList[index].p_name
-                              ),
-                              Text(
-                                style: TextStyle(
-                                  fontSize: FontSize.productTitle,
-                                  fontWeight: FontWeight.bold
-                                ),
-                                " ${productList[index].p_price.toString()}"
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                )
-              ],
-            );
-          }
+                    ),
+                  )
+                ],
+              );
+            }
+          ),
         ),
       ),
     );
