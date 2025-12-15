@@ -133,7 +133,7 @@ class _MyPageState extends State<MyPage> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
                           child: FutureBuilder(
-                            future: buyHandler.queryFavoriteMaker(), 
+                            future: buyHandler.queryFavoriteMaker(1), 
                             builder: (context, snapshot) {
                               return snapshot.hasData && snapshot.data!.isNotEmpty
                               ? Column(
