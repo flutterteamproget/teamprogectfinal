@@ -238,7 +238,8 @@ class _PlpPageState extends State<PlpPage> {
                                 productList[index].p_price,
                                 productList[index].p_image,
                                 productList[index].p_seq,
-                                widget.uSeq
+                                widget.uSeq,
+                                productList[index].m_seq
                               ]),
                           child: Container(
                             color: Colors.white,
