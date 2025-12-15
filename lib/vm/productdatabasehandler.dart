@@ -51,7 +51,22 @@ Future<Database> initializeDB() async{
   );
 }
 
-  Future<List<Product>> queryProduct()async{
+  Future<List<Product>> queryProduct(String order)async{
+
+    //정렬
+    String str = "";
+    if(order == "이름순"){
+      str = "product.p_name asc";
+    }else if(order == "가격 높은순"){
+      str = "product.p_price desc";
+    }else if(order == "가격 낮은순"){
+      str = "product.p_price asc";
+    }else if(order == "브랜드순"){
+      str = "maker.m_name asc";
+    }else{ // 구매순
+
+    }
+    
     final Database db =await initializeDB();
     final List<Map<String,Object?>> result =await db.rawQuery(
       """
@@ -68,6 +83,8 @@ Future<Database> initializeDB() async{
       inner join size_category
       on product.sc_seq = size_category.sc_seq
 
+      order by $str
+
       """,
       
     );
@@ -75,7 +92,21 @@ Future<Database> initializeDB() async{
   }
 
   //카테고리 컬럼명과 시퀀스로 제품목록 검색
-  Future<List<Product>> queryProductCategory(String whatseq, int num)async{
+  Future<List<Product>> queryProductCategory(String whatseq, int num, String order)async{
+
+    //정렬
+    String str = "";
+    if(order == "이름순"){
+      str = "product.p_name asc";
+    }else if(order == "가격 높은순"){
+      str = "product.p_price desc";
+    }else if(order == "가격 낮은순"){
+      str = "product.p_price asc";
+    }else if(order == "브랜드순"){
+      str = "maker.m_name asc";
+    }else{ // 구매순
+
+    }
     final Database db =await initializeDB();
     final List<Map<String,Object?>> result =await db.rawQuery(
       """
@@ -92,6 +123,7 @@ Future<Database> initializeDB() async{
       inner join size_category
       on product.sc_seq = size_category.sc_seq
       where product.$whatseq = ?
+      order by $str
 
       """,
       [num]
@@ -101,7 +133,63 @@ Future<Database> initializeDB() async{
   }
 
   //카테고리 컬럼명과 시퀀스로 제품목록 검색
-  Future<List<Product>> queryProductSearch(String str)async{
+  Future<List<Product>> queryProductCategoryTwo(String whatseq1, int num1, String whatSeq2, int num2, String order)async{
+
+    //정렬
+    String str = "";
+    if(order == "이름순"){
+      str = "product.p_name asc";
+    }else if(order == "가격 높은순"){
+      str = "product.p_price desc";
+    }else if(order == "가격 낮은순"){
+      str = "product.p_price asc";
+    }else if(order == "브랜드순"){
+      str = "maker.m_name asc";
+    }else{ // 구매순
+
+    }
+    final Database db =await initializeDB();
+    final List<Map<String,Object?>> result =await db.rawQuery(
+      """
+      select *
+      from product 
+      inner join maker
+      on product.m_seq = maker.m_seq
+      inner join color_category
+      on product.cc_seq = color_category.cc_seq
+      inner join gender_category
+      on product.gc_seq = gender_category.gc_seq
+      inner join kind_category
+      on product.kc_seq = kind_category.kc_seq
+      inner join size_category
+      on product.sc_seq = size_category.sc_seq
+      where product.$whatseq1 = ? and product.$whatSeq2 = ?
+      order by $str
+
+      """,
+      [num1, num2]
+      
+    );
+    return result.map((e) => Product.fromMap(e)).toList(); //한묶음 하나
+  }
+
+  //브랜드와 신발명 검색 기능
+  Future<List<Product>> queryProductSearch(String string, String order)async{
+
+    //정렬
+    String str = "";
+    if(order == "이름순"){
+      str = "product.p_name asc";
+    }else if(order == "가격 높은순"){
+      str = "product.p_price desc";
+    }else if(order == "가격 낮은순"){
+      str = "product.p_price asc";
+    }else if(order == "브랜드순"){
+      str = "maker.m_name asc";
+    }else{ // 구매순
+
+    }
+
     final Database db =await initializeDB();
     final List<Map<String,Object?>> result =await db.rawQuery(
       """
@@ -119,12 +207,14 @@ Future<Database> initializeDB() async{
       on product.sc_seq = size_category.sc_seq
       where product.p_name like ? or maker.m_name like ?
 
+      order by $str
+
       """,
-      ["%$str%", "%$str%"]
+      ["%$string%", "%$string%"]
       
     );
     return result.map((e) => Product.fromMap(e)).toList(); //한묶음 하나
-  }  
+  }
 
 
 
