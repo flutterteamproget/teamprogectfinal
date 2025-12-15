@@ -131,7 +131,7 @@ Future<Map?> queryBranchAddress(int b_seq) async{
 
 
 // 상품 금액
-Future<String?> queryProductPrice(int u_seq, int b_seq) async{
+Future<String?> queryProductPrice(int b_seq) async{
     final Database db = await initializeDB();
     final List<Map<String, Object?>> queryResults = await db.rawQuery(
       """
@@ -141,7 +141,7 @@ Future<String?> queryProductPrice(int u_seq, int b_seq) async{
       on b.p_seq = p.p_seq
       where b_seq = ?
       """,
-      [u_seq, b_seq]
+      [b_seq]
     ); 
     // queryResults = [{b_date : 2025-12-11}], [], ...
     if(queryResults.isNotEmpty){

@@ -118,19 +118,15 @@ class _MyPageState extends State<MyPage> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
-                          child: Text(
+                        Divider(color: PColor.borderColor),
+                        ExpansionTile(
+                          title: Text(
                             '통계',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                        ),
-                        Divider(color: PColor.borderColor),
-                        ExpansionTile(
-                          title: Text('통계'),
                           children: [
 
                         // 선호 메이커
