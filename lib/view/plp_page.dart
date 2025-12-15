@@ -9,7 +9,8 @@ import 'package:teamprogectfinal/vm/makerdatabasehandler.dart';
 import 'package:teamprogectfinal/vm/productdatabasehandler.dart';
 
 class PlpPage extends StatefulWidget {
-  const PlpPage({super.key});
+  final int uSeq;
+  const PlpPage({super.key,required this.uSeq});
 
   @override
   State<PlpPage> createState() => _PlpPageState();
@@ -236,6 +237,8 @@ class _PlpPageState extends State<PlpPage> {
                                 productList[index].p_name,
                                 productList[index].p_price,
                                 productList[index].p_image,
+                                productList[index].p_seq,
+                                widget.uSeq
                               ]),
                           child: Container(
                             color: Colors.white,
