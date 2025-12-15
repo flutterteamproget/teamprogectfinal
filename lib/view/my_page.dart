@@ -146,17 +146,11 @@ class _MyPageState extends State<MyPage> {
                             return snapshot.hasData && snapshot.data!.isNotEmpty
                             ? Column(
                                 children: [
-                        
                                   Row(
                                     children: [
-                                      Text('      1위 ${snapshot.data![0]['m_name']}, 구매 횟수 ${snapshot.data![0]['count(m.m_seq)']}'),
+                                      Text('      ${snapshot.data![0]['m_name']}, 구매 횟수 ${snapshot.data![0]['count(m.m_seq)']}'),
                                     ],
                                   ),
-                                  // Row(
-                                  //   children: [
-                                  //     Text('  2위 ${snapshot.data![1]['m_name']}, 구매 횟수 ${snapshot.data![1]['count(m.m_seq)']}'),
-                                  //   ],
-                                  // ),
                                 ],
                             )
                             : Row(
@@ -382,11 +376,5 @@ reloadData(){
     setState(() {});
 
   }
-
-favoriteBranch(AsyncSnapshot snapshot){
-  snapshot.data!['br_name'];
-}
-
-
 
 }//class

@@ -22,7 +22,7 @@ class Buydatabasehandler {
 
 Future<Database> initializeDB() async{
   String path = await getDatabasesPath();
-  print("실제 DB 저장 위치: $path");
+  // print("실제 DB 저장 위치: $path");
   return openDatabase(
     join(path, 'user.db'),
     onCreate: (db, version) async{
