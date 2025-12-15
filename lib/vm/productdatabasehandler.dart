@@ -64,14 +64,23 @@ Future<Database> initializeDB() async{
     }else if(order == "브랜드순"){
       str = "maker.m_name asc";
     }else{ // 구매순
-
+      str = "buy_count DESC";
     }
     
     final Database db =await initializeDB();
     final List<Map<String,Object?>> result =await db.rawQuery(
       """
-      select *
+      select     
+        product.*,
+        maker.*,
+        color_category.*,
+        gender_category.*,
+        kind_category.*,
+        size_category.*,
+        COUNT(buy.b_seq) AS buy_count
+
       from product 
+
       inner join maker
       on product.m_seq = maker.m_seq
       inner join color_category
@@ -82,7 +91,11 @@ Future<Database> initializeDB() async{
       on product.kc_seq = kind_category.kc_seq
       inner join size_category
       on product.sc_seq = size_category.sc_seq
+      LEFT JOIN buy
+      ON product.p_seq = buy.p_seq
 
+      GROUP BY product.p_seq
+      
       order by $str
 
       """,
