@@ -7,6 +7,7 @@ import 'package:teamprogectfinal/view/my_page.dart';
 import 'package:teamprogectfinal/view/pdp_page.dart';
 import 'package:teamprogectfinal/view/plp_drawer_page.dart';
 import 'package:teamprogectfinal/view/plp_page.dart';
+import 'package:teamprogectfinal/view/tabbarview.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
      
-      home: const MainPage(uSeq: 1,),
+      home: const Tabbarview(useq: 1,),
     );
   }
 }
