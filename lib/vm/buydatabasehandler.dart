@@ -90,6 +90,8 @@ Future<List> queryBuy2(int u_seq) async{
       on p.p_seq = b.p_seq
       inner join user as u
       on b.u_seq = u.u_seq
+      inner join size_category as sc
+      on sc.sc_seq = p.sc_seq
       where u.u_seq = ?
       """,
       [u_seq]

@@ -277,7 +277,7 @@ class _MyPageState extends State<MyPage> {
                                                 Text(maker, style: TextStyle(fontWeight: FontWeight.bold),),
                                                 Text('${snapshot.data![index]['p_name']}'.substring(1)),
                                                 Text(
-                                                  '${snapshot.data![index]['p_size']} / ${snapshot.data![index]['b_quantity']}개',
+                                                  '${snapshot.data![index]['sc_name']} / ${snapshot.data![index]['b_quantity']}개',
                                                   style: TextStyle(
                                                     fontSize: FontSize.greylittle,
                                                     color: Colors.grey
