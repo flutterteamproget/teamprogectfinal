@@ -77,7 +77,7 @@ Future<Database> initializeDB() async{
         gender_category.*,
         kind_category.*,
         size_category.*,
-        COUNT(buy.b_seq) AS buy_count
+        SUM(buy.b_quantity) AS buy_count
 
       from product 
 
@@ -130,7 +130,7 @@ Future<Database> initializeDB() async{
         gender_category.*,
         kind_category.*,
         size_category.*,
-        COUNT(buy.b_seq) AS buy_count
+        SUM(buy.b_quantity) AS buy_count
 
       from product
 
@@ -186,7 +186,7 @@ Future<Database> initializeDB() async{
         gender_category.*,
         kind_category.*,
         size_category.*,
-        COUNT(buy.b_seq) AS buy_count
+        SUM(buy.b_quantity) AS buy_count
 
       from product
 
@@ -243,7 +243,7 @@ Future<Database> initializeDB() async{
         gender_category.*,
         kind_category.*,
         size_category.*,
-        COUNT(buy.b_seq) AS buy_count
+        SUM(buy.b_quantity) AS buy_count
 
       from product
 
